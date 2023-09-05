@@ -22,7 +22,7 @@ const Hero = () => {
         </div>
 
         <div className="flex flex-col justify-between  text-cd-txt ">
-          <span className="text-7xl py-3">&#39;👋&#39;</span>
+          <span className="text-7xl py-3">👋</span>
           <p className="text-2xl leading-8">Hello, I am Jabulani Charinga</p>
           <h1 className="text-4xl max-w-xl py-3">
             FullStack Developer & UI/UX Designer

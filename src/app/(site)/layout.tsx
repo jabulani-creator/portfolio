@@ -18,7 +18,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className="bg-cd-bck2 dark:bg-black">
+      <body className="bg-cd-bck2">
         <main className={lato.className}>
           {children}
           <Footer />

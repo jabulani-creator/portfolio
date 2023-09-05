@@ -55,7 +55,9 @@ export default async function Project({ params }: Props) {
       <div className="bg-black h-auto ">
         <div className="w-10/12 m-auto text-center pt-28 pb-28">
           <h1 className="text-5xl text-white pb-6">The Project</h1>
-          <p className="max-w-3xl mr-auto ml-auto ">{project.about}</p>
+          <p className="max-w-3xl mr-auto ml-auto text-white">
+            {project.about}
+          </p>
           <button className=" mt-8 bg-transparent hover:bg-cd-cta text-white  hover:text-white py-2 px-4 border border-white hover:border-transparent rounded w-32">
             <a href={project.url} target="_blank" rel="noopener noreferrer">
               Visit Website
