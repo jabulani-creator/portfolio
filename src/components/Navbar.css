@@ -100,6 +100,7 @@ nav {
   background: #f0f4f8;
   box-shadow: var(--light-shadow);
 }
+
 .nav-header {
   display: flex;
   align-items: center;

@@ -40,9 +40,9 @@ const MiniNav = () => {
               const { id, url, text } = link;
               return (
                 <li key={id} className="py-10  " onClick={toggleLinks}>
-                  <a href={url} className="Li">
+                  <Link href={url} className="Li">
                     {text}
-                  </a>
+                  </Link>
                 </li>
               );
             })}

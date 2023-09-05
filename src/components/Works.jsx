@@ -27,8 +27,8 @@ const Works = async () => {
             )}
 
             <div>
-              <h2 className="mt-2 "></h2>
-              {project.name}
+              <h2 className="mt-2 text-2xl "> {project.name}</h2>
+
               <p className="max-w-lg text-justify py-6 leading-8">
                 {project.about.substring(0, 100)}
               </p>

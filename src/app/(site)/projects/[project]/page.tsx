@@ -1,9 +1,7 @@
-import { PortableText } from "@portabletext/react";
-import Image from "next/image";
 import { getProject } from "../../../../../sanity/schemas/sanity-utils";
 
 import { Poppins } from "next/font/google";
-import { Fonts, Task } from "@/components";
+import { Fonts, Task, MiniNav } from "@/components";
 
 const poppins = Poppins({ subsets: ["latin"], weight: ["400"] });
 
@@ -23,6 +21,7 @@ export default async function Project({ params }: Props) {
 
   return (
     <>
+      <MiniNav />
       <div style={containerStyle} className="h-screen bg-cd-bck2 relative">
         <div className="absolute inset-0 bg-black opacity-5"></div>
         <div className="text-white flex justify-center flex-col items-center h-full">
@@ -58,7 +57,9 @@ export default async function Project({ params }: Props) {
           <h1 className="text-5xl text-white pb-6">The Project</h1>
           <p className="max-w-3xl mr-auto ml-auto ">{project.about}</p>
           <button className=" mt-8 bg-transparent hover:bg-cd-cta text-white  hover:text-white py-2 px-4 border border-white hover:border-transparent rounded w-32">
-            <a href={project.url}>Visit Website</a>
+            <a href={project.url} target="_blank" rel="noopener noreferrer">
+              Visit Website
+            </a>
           </button>
         </div>
       </div>

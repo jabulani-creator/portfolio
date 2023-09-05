@@ -26,6 +26,8 @@ const config: Config = {
           txt: "#102a43",
           shade: "#829ab1",
           sp: "#D8EBF1",
+          sk: "#055263",
+          txt2: "#254FD9",
         },
       },
     },

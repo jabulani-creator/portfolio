@@ -1,3 +1,4 @@
+"use client";
 import "../globals.css";
 import type { Metadata } from "next";
 import { Lato } from "next/font/google";
@@ -18,9 +19,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className="bg-cd-bck2">
+      <body className="bg-cd-bck2 dark:bg-black">
         <main className={lato.className}>
-          <Navbar />
           {children}
           <Footer />
         </main>

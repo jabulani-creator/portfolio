@@ -15,7 +15,7 @@ type Project = {
   url: string;
   role: string;
   context: string;
-  about: PortableTextBlock[];
+  about: string;
   task: PortableTextBlock[];
   colors: string[];
   fonts: string[];

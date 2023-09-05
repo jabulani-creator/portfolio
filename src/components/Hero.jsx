@@ -58,7 +58,7 @@ const Hero = () => {
             className="absolute  top-3  h-96 w-96 right-96 z-0 md:block "
           />
           <button className="bg-cd-cta hover:bg-cd-cta w-32 text-white font-bold py-2 px-4 border border-blue-900 rounded">
-            About Me
+            <a href="#about">About Me</a>
           </button>
         </div>
       </div>

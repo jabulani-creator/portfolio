@@ -1,6 +1,7 @@
 import Head from "./Head";
 import me from "../../assets/me.jpg";
 import Image from "next/image";
+import Link from "next/link";
 
 const About = () => {
   return (
@@ -26,7 +27,13 @@ const About = () => {
             innovations.
           </p>
           <button className="bg-cd-cta hover:bg-cd-cta w-32 text-white font-bold py-2 px-4 border border-blue-900 rounded">
-            My Resume
+            <a
+              href="https://docs.google.com/document/d/1MoF7yVM_P4HtIGR338ZFX_4GOEuauRrOsbnT3iw3w28/edit?usp=sharing"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              My Resume
+            </a>
           </button>
         </div>
       </div>
