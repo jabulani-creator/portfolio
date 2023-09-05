@@ -38,10 +38,11 @@ const Hero = () => {
             className="absolute  bottom-50  h-80 w-32 left-2 z-0 hidden"
           />
           <p className="max-w-xl text-justify py-3">
-            I'm a passion driven software developer and change-maker, with a
-            practical approach to building viable innovations that have a
+            I&apos;m a passion driven software developer and change-maker, with
+            a practical approach to building viable innovations that have a
             positive impact on the lives of the people, and the future.
           </p>
+
           <Image
             src={circle}
             alt="circle"
