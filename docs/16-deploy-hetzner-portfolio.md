@@ -1,144 +1,142 @@
-# Deploy this portfolio on Hetzner
+# Deploy portfolio on the central Hetzner server
 
-This app is **Next.js only** (no Django). Sanity CMS lives at **`/admin`** on the same domain.
+This repo is **Next.js only** (no Django backend). Sanity Studio is at **`/admin`**.
 
-It fits the same pattern as your demo-hub guide: **`deploy` user**, **PM2**, **Nginx**, **one port per app**.
-
----
-
-## What you need before starting
-
-| Item | Example for this repo |
-|------|------------------------|
-| Server | Hetzner VPS, SSH as `deploy@YOUR_IP` |
-| GitHub SSH | Server key added to GitHub (see your main Hetzner guide) |
-| Domain | `thewebsiteguy.zm` → A record to server IP |
-| Sanity | Project `43qkdan1` (or yours), dataset `production` |
-| Port | **3003** for this app (leave 3001/3002 for other demos) |
-
-After deploy, in [sanity.io/manage](https://www.sanity.io/manage) → your project → **API** → **CORS origins**, add:
-
-- `https://thewebsiteguy.zm` (and `https://www.thewebsiteguy.zm` if you use www)
+It follows the same **multi-app pattern** as Crosspark / Emmasdale / Kwishoko: `deploy` user, `~/scripts/deploy_frontend.sh`, PM2, raw **IP + port** until domains are added.
 
 ---
 
-## 1. Clone on the server
+## Port slot (add to `~/apps/PORTS.md`)
+
+| App | PM2 name | Frontend port | Backend port |
+|-----|----------|---------------|--------------|
+| Crosspark | `crosspark-frontend` | 3000 | 8000 |
+| Emmasdale | `emmasdale-frontend` | 3001 | 8001 |
+| Kwishoko | `kwishoko-frontend` | 3002 | 8002 |
+| **Portfolio (this repo)** | **`portfolio-frontend`** | **3003** | *(none)* |
 
 ```bash
-mkdir -p ~/apps
-cd ~/apps
-git clone git@github.com:jabulani-creator/portfolio.git portfolio
-cd ~/apps/portfolio
+nano ~/apps/PORTS.md
 ```
 
 ---
 
-## 2. Create production env (server only)
+## 1. Push from your laptop
+
+Use the **jabulani-creator** SSH remote (not plain `git@github.com` if that maps to nikwisa):
 
 ```bash
+git remote -v
+# origin  git@github-jabulani:jabulani-creator/portfolio.git
+git push
+```
+
+---
+
+## 2. Clone on the server (folder name for scripts)
+
+Scripts expect `~/apps/<app>/<App>_Frontend`. Use app name **`portfolio`**:
+
+```bash
+mkdir -p ~/apps/portfolio
+cd ~/apps/portfolio
+git clone git@github.com:jabulani-creator/portfolio.git Portfolio_Frontend
+```
+
+If GitHub SSH on the server uses a deploy key, use the same host alias you configured there.
+
+---
+
+## 3. Configure `.env.production`
+
+```bash
+cd ~/apps/portfolio/Portfolio_Frontend
 cp .env.production.example .env.production
 nano .env.production
 ```
 
-Set at minimum:
+Set at least:
 
-- `NEXT_PUBLIC_SANITY_PROJECT_ID` — your Sanity project ID  
-- `NEXT_PUBLIC_SANITY_DATASET=production`  
-- `NEXT_PUBLIC_SITE_URL=https://thewebsiteguy.zm`  
-- `PORT=3003`  
-- `PM2_APP_NAME=portfolio-frontend`  
+- `NEXT_PUBLIC_SANITY_PROJECT_ID`
+- `NEXT_PUBLIC_SANITY_DATASET=production`
+- `NEXT_PUBLIC_SITE_URL=http://167.233.68.200:3003` (no backticks)
+- `PORT=3003`
+- `PM2_APP_NAME=portfolio-frontend`
 
-Do **not** commit `.env.production`. It stays only on the server.
+**Do not commit** `.env.production`.
+
+In [sanity.io/manage](https://www.sanity.io/manage) → **API** → **CORS origins**, add:
+
+- `http://167.233.68.200:3003`
+
+When you add a domain later, update CORS and `NEXT_PUBLIC_SITE_URL`, then **rebuild** (see below).
 
 ---
 
-## 3. Install, build, run with PM2
+## 4. Deploy with the generic frontend script
+
+No backend step for this app.
 
 ```bash
-cd ~/apps/portfolio
+cd ~/scripts
+./deploy_frontend.sh portfolio portfolio-frontend
+```
+
+Use **`portfolio`**, not `portfolio/` (trailing slash breaks logs).
+
+**First time only**, if PM2 does not list the app yet:
+
+```bash
+cd ~/apps/portfolio/Portfolio_Frontend
+set -a && . ./.env.production && set +a
 npm ci
-set -a
-. ./.env.production
-set +a
 npm run build
-pm2 start ecosystem.config.cjs --only portfolio-frontend --update-env
+pm2 start ecosystem.config.js
 pm2 save
 ```
 
-Check:
+---
+
+## 5. Open the firewall (IP + port mode)
+
+```bash
+sudo ufw allow 3003/tcp
+sudo ufw status
+```
+
+---
+
+## 6. Verify
 
 ```bash
 pm2 status
 curl -I http://127.0.0.1:3003
 ```
 
-You should see HTTP headers from Next.js.
-
-**Important:** `NEXT_PUBLIC_*` values are embedded at **`npm run build`**. If you change them later, reload env and run **`npm run build`** again, then:
-
-```bash
-pm2 restart portfolio-frontend --update-env
-```
+Browser: **http://167.233.68.200:3003**  
+Studio: **http://167.233.68.200:3003/admin**
 
 ---
 
-## 4. Nginx (domain → port 3003)
+## 7. Updates after code changes
 
-Create a site config:
-
-```bash
-sudo nano /etc/nginx/sites-available/thewebsiteguy.zm
-```
-
-Paste (replace domain if different):
-
-```nginx
-server {
-    listen 80;
-    server_name thewebsiteguy.zm www.thewebsiteguy.zm;
-
-    location / {
-        proxy_pass http://127.0.0.1:3003;
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection "upgrade";
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-        proxy_cache_bypass $http_upgrade;
-    }
-}
-```
-
-Enable and reload:
+1. `git push` from laptop  
+2. On server:
 
 ```bash
-sudo ln -sf /etc/nginx/sites-available/thewebsiteguy.zm /etc/nginx/sites-enabled/
-sudo nginx -t
-sudo systemctl reload nginx
+cd ~/scripts
+./deploy_frontend.sh portfolio portfolio-frontend
 ```
 
----
+If you changed any `NEXT_PUBLIC_*` in `.env.production`, the script’s build step must run with env loaded (your script should `source` `.env.production` before `npm run build`).
 
-## 5. HTTPS (Let’s Encrypt)
-
-```bash
-sudo apt install -y certbot python3-certbot-nginx
-sudo certbot --nginx -d thewebsiteguy.zm -d www.thewebsiteguy.zm
-```
-
-Certbot updates Nginx for HTTPS. Renewals are automatic.
-
----
-
-## 6. Updates after you push to GitHub
+Manual equivalent:
 
 ```bash
-cd ~/apps/portfolio
+cd ~/apps/portfolio/Portfolio_Frontend
 git pull
-npm ci
 set -a && . ./.env.production && set +a
+npm ci
 npm run build
 pm2 restart portfolio-frontend --update-env
 pm2 save
@@ -146,34 +144,17 @@ pm2 save
 
 ---
 
-## 7. Sanity checklist (live site)
+## 8. Optional: domain + Nginx later
 
-1. Case studies: **Show on public website** on + **Publish** in Studio.  
-2. CORS includes your HTTPS domain (step above).  
-3. Optional seed on server (needs token in `.env.production` temporarily):
-
-   ```bash
-   # add SANITY_API_TOKEN=... to .env.production, then:
-   set -a && . ./.env.production && set +a
-   npm run seed:sanity
-   ```
+When `thewebsiteguy.zm` points at `167.233.68.200`, proxy port 80/443 to `127.0.0.1:3003`, set `NEXT_PUBLIC_SITE_URL=https://thewebsiteguy.zm`, rebuild, and add HTTPS CORS in Sanity.
 
 ---
 
-## Troubleshooting
+## Rules (same as multi-app runbook)
 
-| Symptom | Fix |
-|---------|-----|
-| Build runs out of memory | Add swap (Step 8 in your Hetzner beginner guide) |
-| Site works on `:3003` but not domain | Nginx `proxy_pass` port, `nginx -t`, firewall allows `Nginx Full` |
-| `/admin` blank or project error | Wrong `NEXT_PUBLIC_SANITY_PROJECT_ID`; rebuild after fixing env |
-| CMS content missing on site | Publish + **Show on public website**; check dataset is `production` |
-| `Permission denied` editing nginx | Use `sudo nano ...` |
-
----
-
-## Multiple apps on one server
-
-Keep this app on **3003**. Other demos use their own ports (3001, 3002, …). Each gets its own Nginx `server_name` (domain or subdomain).
+1. **No backticks** in `.env` files.  
+2. **Commit and push** before `deploy_frontend.sh` (it runs `git pull`).  
+3. **`NEXT_PUBLIC_*` changes require `npm run build`** again.  
+4. Case studies on the live site need **Show on public website** + **Publish** in Studio.
 
 Related: [11-sanity-fresh-start.md](./11-sanity-fresh-start.md), [10-cms-publishing-checklist.md](./10-cms-publishing-checklist.md)
