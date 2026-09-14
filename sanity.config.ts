@@ -1,14 +1,15 @@
 import { defineConfig } from "sanity";
-import { deskTool } from "sanity/desk";
+import { structureTool } from "sanity/structure";
 import schemas from "./sanity/schemas";
+import clientConfig from "./sanity/config/client-config";
 
 const config = defineConfig({
-  projectId: "878b6nm8",
-  dataset: "production",
-  title: "my-portfolio",
-  apiVersion: "2023-08-29",
+  projectId: clientConfig.projectId,
+  dataset: clientConfig.dataset,
+  title: process.env.NEXT_PUBLIC_SANITY_STUDIO_TITLE?.trim() || "Portfolio CMS",
+  apiVersion: clientConfig.apiVersion,
   basePath: "/admin",
-  plugins: [deskTool()],
+  plugins: [structureTool()],
   schema: { types: schemas },
 });
 

@@ -1,3 +1,59 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-cd-bck2 text-cd-txt antialiased;
+  }
+}
+
+@layer components {
+  .studio-eyebrow {
+    @apply font-mono text-[11px] uppercase tracking-[0.18em] text-cd-shade;
+  }
+
+  .studio-headline {
+    @apply font-display text-display font-bold tracking-tight text-cd-txt;
+  }
+
+  .studio-body {
+    @apply text-[15px] leading-relaxed text-cd-shade md:text-base;
+  }
+
+  .studio-card {
+    @apply rounded-xl border border-cd-border bg-white p-6 md:p-8;
+  }
+
+  .pill-btn {
+    @apply inline-flex items-center justify-center rounded-full bg-cd-txt px-5 py-2.5 text-xs font-semibold uppercase tracking-wide text-white transition hover:bg-cd-muted;
+  }
+
+  .pill-btn-outline {
+    @apply inline-flex items-center justify-center rounded-full border border-cd-txt bg-transparent px-5 py-2.5 text-xs font-semibold uppercase tracking-wide text-cd-txt transition hover:bg-cd-txt hover:text-white;
+  }
+
+  .pill-btn-inverse {
+    @apply inline-flex items-center justify-center rounded-full bg-white px-5 py-2.5 text-xs font-semibold uppercase tracking-wide text-cd-txt transition hover:bg-cd-bck;
+  }
+
+  .nav-link {
+    @apply text-sm text-cd-shade transition hover:text-cd-txt;
+  }
+
+  .mono-index {
+    @apply font-mono text-xs text-cd-shade;
+  }
+
+  .terminal-window {
+    @apply overflow-hidden rounded-xl border border-cd-border bg-cd-terminal text-cd-terminal-fg shadow-lg;
+  }
+
+  .section-rule {
+    @apply border-t border-cd-border;
+  }
+}

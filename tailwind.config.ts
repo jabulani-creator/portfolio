@@ -2,33 +2,40 @@ import type { Config } from "tailwindcss";
 
 const config: Config = {
   content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/app/**/*.{ts,tsx,mdx}",
+    "./src/components/**/*.{ts,tsx,mdx}",
+    "./src/lib/**/*.{ts,tsx}",
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-      },
       fontFamily: {
-        lato: ["Lato", "sans"], // Replace 'Lato' with your desired font name
-        playfair: ["Playfair Display", "serif"],
-        poppins: ["Poppins", "sans"], // Replace 'Playfair Display' with your desired font name
+        sans: ["var(--font-body)", "system-ui", "sans-serif"],
+        display: ["var(--font-display)", "var(--font-body)", "sans-serif"],
+        mono: ["var(--font-mono)", "ui-monospace", "monospace"],
       },
       colors: {
         cd: {
-          cta: "#024751",
-          bck: "#E5E5E5",
-          bck2: "#f0f4f8",
-          txt: "#102a43",
-          shade: "#829ab1",
-          sp: "#D8EBF1",
-          sk: "#055263",
-          txt2: "#254FD9",
+          bck2: "#f0f0eb",
+          bck: "#e8e8e3",
+          txt: "#0a0a0a",
+          shade: "#5c5c5c",
+          muted: "#2a2a2a",
+          border: "#d4d4ce",
+          cta: "#0a0a0a",
+          charcoal: "#0a0a0a",
+          terminal: "#111111",
+          "terminal-fg": "#e8e8e3",
+          "terminal-dim": "#8a8a8a",
         },
+      },
+      fontSize: {
+        display: [
+          "clamp(2.25rem,5.5vw,3.75rem)",
+          { lineHeight: "1.08", letterSpacing: "-0.03em" },
+        ],
+      },
+      borderRadius: {
+        pill: "9999px",
       },
     },
   },
