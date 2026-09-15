@@ -21,9 +21,11 @@ export function getDefaultSiteShell(): SiteSettings {
       "I investigate why your digital presence isn't working, then build the fix.",
     homepageVariant: "diagnostic",
     navigation: [
-      { label: "Methodology", href: "/#methodology", order: 1 },
-      { label: "Case Studies", href: "/case-studies", order: 2 },
-      { label: "Diagnostic", href: "/digital-experience-diagnostic", order: 3 },
+      { label: "Work", href: "/case-studies", order: 1 },
+      { label: "Diagnostics", href: "/digital-experience-diagnostic", order: 2 },
+      { label: "How I Work", href: "/how-i-work", order: 3 },
+      { label: "About", href: "/about", order: 4 },
+      { label: "Contact", href: "/start-here", order: 5 },
     ],
     primaryCta: {
       label: "Book a Digital Experience Diagnostic",
@@ -306,9 +308,9 @@ export function getDefaultCaseStudies(): CaseStudy[] {
           {
             label: "Weekend planning",
             before:
-              "Instagram and friend WhatsApp — prices unclear, no shortlist.",
+              "Instagram\n↓\nFriend WhatsApp\n↓\nPrices unclear\n↓\nNo shortlist",
             after:
-              "Ideas or PAC hub → compare fees and conditions → enquire.",
+              "Ideas or PAC hub\n↓\nCompare fees & conditions\n↓\nWhatsApp enquire",
           },
         ],
       },

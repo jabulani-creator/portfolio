@@ -17,10 +17,12 @@ export default function FinalDiagnosticCta({
     <Section variant="default" className="pb-24 md:pb-32">
       <div className="rounded-2xl bg-cd-txt px-8 py-14 text-center text-white md:px-16 md:py-16">
         <h2 className="text-2xl font-bold tracking-tight md:text-3xl">
-          Ready to fix your digital presence?
+          Ready to find where your customers get stuck?
         </h2>
-        <p className="mx-auto mt-4 max-w-md text-sm text-white/70">
-          Get a technical roadmap in {turnaround}.
+        <p className="mx-auto mt-4 max-w-lg text-sm text-white/70">
+          Get a structured digital diagnosis of your customer journey, website, and
+          digital presence.
+          {turnaround ? ` Delivered in ${turnaround}.` : ""}
           {priceLabel ? ` Investment ${priceLabel}.` : ""}
         </p>
         <div className="mt-8 flex justify-center">

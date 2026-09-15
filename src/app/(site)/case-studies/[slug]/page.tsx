@@ -6,29 +6,35 @@ import {
 } from "@/lib/content/queries/caseStudies";
 import { getSiteSettings } from "@/lib/content/queries/site";
 import { getDefaultSiteShell } from "@/lib/content/defaults";
-import CaseStudyHeader from "@/components/case-studies/CaseStudyHeader";
+import { buildStoryLayerFromCaseStudy } from "@/lib/content/caseStudyStoryContent";
 import CaseStudyStickyNav, {
   StickySection,
 } from "@/components/case-studies/CaseStudyStickyNav";
-import NarrativeSection from "@/components/case-studies/NarrativeSection";
-import CaseStudyCta from "@/components/case-studies/CaseStudyCta";
-import CustomerJourneyStrip from "@/components/case-studies/CustomerJourneyStrip";
-import ClientQuoteSection from "@/components/case-studies/ClientQuoteSection";
-import CaseStudyProjectNav from "@/components/case-studies/CaseStudyProjectNav";
-import ContextStatsSection from "@/components/case-studies/ContextStatsSection";
+import CaseStudyStoryHero from "@/components/case-studies/story/CaseStudyStoryHero";
+import BusinessEnginesSection from "@/components/case-studies/story/BusinessEnginesSection";
+import AudiencePersonasSection from "@/components/case-studies/story/AudiencePersonasSection";
+import JourneyBreakpointScreen from "@/components/case-studies/story/JourneyBreakpointScreen";
+import RankedLeaksSection from "@/components/case-studies/story/RankedLeaksSection";
+import FixLayersSection from "@/components/case-studies/story/FixLayersSection";
+import RecommendationSection from "@/components/case-studies/story/RecommendationSection";
+import SystemBlueprintSection from "@/components/case-studies/story/SystemBlueprintSection";
+import OutcomeShiftTable from "@/components/case-studies/story/OutcomeShiftTable";
+import CaseStudyRoleStrip from "@/components/case-studies/story/CaseStudyRoleStrip";
+import FullDiagnosticArchive from "@/components/case-studies/story/FullDiagnosticArchive";
+import SimilarProblemCta from "@/components/case-studies/story/SimilarProblemCta";
 import EvidenceMediaSection from "@/components/case-studies/EvidenceMediaSection";
-import ScopeNoteSection from "@/components/case-studies/ScopeNoteSection";
-import DeliverableTeaserSection from "@/components/case-studies/DeliverableTeaserSection";
-import BeforeAfterSection from "@/components/case-studies/BeforeAfterSection";
-import ClosingBridgeSection from "@/components/case-studies/ClosingBridgeSection";
-import CaseStudyContentBlocks from "@/components/case-studies/CaseStudyContentBlocks";
-import ProblemsSection from "@/components/case-studies/ProblemsSection";
+import EvidenceImpactSection from "@/components/case-studies/EvidenceImpactSection";
+import NarrativeSection from "@/components/case-studies/NarrativeSection";
+import InvestigationDetailSection from "@/components/case-studies/InvestigationDetailSection";
 import ProblemSolutionSection from "@/components/case-studies/ProblemSolutionSection";
 import StrategyThesisSection from "@/components/case-studies/StrategyThesisSection";
-import TechnologyRoleSection from "@/components/case-studies/TechnologyRoleSection";
-import InvestigationDetailSection from "@/components/case-studies/InvestigationDetailSection";
 import WorkflowsSection from "@/components/case-studies/WorkflowsSection";
-import EvidenceImpactSection from "@/components/case-studies/EvidenceImpactSection";
+import BeforeAfterSection from "@/components/case-studies/BeforeAfterSection";
+import ClientQuoteSection from "@/components/case-studies/ClientQuoteSection";
+import ScopeNoteSection from "@/components/case-studies/ScopeNoteSection";
+import TechnologyRoleSection from "@/components/case-studies/TechnologyRoleSection";
+import ClosingBridgeSection from "@/components/case-studies/ClosingBridgeSection";
+import CaseStudyContentBlocks from "@/components/case-studies/CaseStudyContentBlocks";
 import { buildPageMetadata } from "@/lib/seo";
 import type CaseStudy from "../../../../../types/CaseStudy";
 import {
@@ -37,45 +43,36 @@ import {
   getEvidenceMediaForSection,
   getInvestigationNarrative,
   getOutcomeMetrics,
-  getPrimaryMaps,
   getProblemSolutionMaps,
-  getProblemsForPublic,
   getTestimonialDisplay,
   NarrativeAnchor,
 } from "../../../../../types/CaseStudy";
+import { getLeaksForDisplay } from "@/lib/caseStudyVisualHelpers";
 
 type Props = {
   params: Promise<{ slug: string }>;
 };
 
-function buildStickySections(caseStudy: CaseStudy): StickySection[] {
+function buildStoryStickyNav(
+  story: ReturnType<typeof buildStoryLayerFromCaseStudy>,
+  caseStudy: CaseStudy
+): StickySection[] {
   const sections: StickySection[] = [];
   let step = 1;
-
   const add = (id: string, label: string) => {
     sections.push({ id, step, label });
     step += 1;
   };
 
-  if (getBusinessNarrative(caseStudy)?.trim()) {
-    add("cs-business", "Business");
-  }
-  if (getInvestigationNarrative(caseStudy)?.trim()) {
-    add("cs-investigation", "Investigation");
-  }
-  if (getProblemsForPublic(caseStudy).length) {
-    add("cs-problems", "Problems");
-  }
-  if (getPrimaryMaps(caseStudy).length || getProblemSolutionMaps(caseStudy).length) {
-    add("cs-solutions", "Solutions");
-  }
-  const hasImpact =
-    getOutcomeMetrics(caseStudy).length > 0 ||
-    caseStudy.beforeAfter?.items?.length ||
-    getTestimonialDisplay(caseStudy);
-  if (hasImpact) {
-    add("cs-impact", "Impact");
-  }
+  if (story.revenueEngines?.length) add("cs-business", "Business");
+  if (story.audiencePersonas?.length) add("cs-audiences", "Customers");
+  if (story.journeySteps?.length) add("cs-journey-breaks", "Journey");
+  if (getLeaksForDisplay(caseStudy).length) add("cs-leaks", "Leaks");
+  if (story.fixLayers?.length) add("cs-fix-layers", "Fix");
+  if (story.recommendationHeadline) add("cs-recommendation", "Rec");
+  if (story.blueprintMonospace) add("cs-blueprint", "Blueprint");
+  if (story.outcomeRows?.length) add("cs-outcome", "Outcome");
+  add("cs-full-diagnostic", "Evidence");
 
   return sections;
 }
@@ -122,134 +119,103 @@ export default async function CaseStudyDetailPage({ params }: Props) {
   }
 
   const shell = siteSettings ?? getDefaultSiteShell();
+  const story = buildStoryLayerFromCaseStudy(slug, caseStudy);
+  const stickySections = buildStoryStickyNav(story, caseStudy);
   const outcomeMetrics = getOutcomeMetrics(caseStudy);
-  const stickySections = buildStickySections(caseStudy);
-  const testimonial = getTestimonialDisplay(caseStudy);
   const maps = getProblemSolutionMaps(caseStudy);
+  const testimonial = getTestimonialDisplay(caseStudy);
   const strategicThesis =
     caseStudy.strategicThesis?.trim() ||
     caseStudy.decision?.split("\n\n")[0]?.trim();
   const strategyBody =
     caseStudy.strategicThesis?.trim() && caseStudy.decision?.trim()
       ? caseStudy.decision
-      : caseStudy.strategicThesis?.trim()
-        ? undefined
-        : caseStudy.decision;
+      : undefined;
 
-  const blocksScope = getContentBlocksForPlacement(
-    caseStudy.contentBlocks,
-    "scope"
-  );
-  const blocksQuote = getContentBlocksForPlacement(
-    caseStudy.contentBlocks,
-    "quote"
-  );
-  const blocksEnd = getContentBlocksForPlacement(
-    caseStudy.contentBlocks,
-    "end"
+  const blocksScope = getContentBlocksForPlacement(caseStudy.contentBlocks, "scope");
+  const blocksQuote = getContentBlocksForPlacement(caseStudy.contentBlocks, "quote");
+  const blocksEnd = getContentBlocksForPlacement(caseStudy.contentBlocks, "end");
+
+  const implementationMedia = getEvidenceMediaForSection(
+    caseStudy.evidenceMedia,
+    "implementation"
   );
 
   return (
     <>
-      <CaseStudyHeader caseStudy={caseStudy} />
+      <CaseStudyStoryHero caseStudy={caseStudy} story={story} />
       <CaseStudyStickyNav sections={stickySections} />
 
-      <NarrativeSection
-        label="The business"
-        body={getBusinessNarrative(caseStudy)}
-        step={1}
-        sectionId="cs-business"
-      />
-      {caseStudy.contextStats && (
-        <ContextStatsSection stats={caseStudy.contextStats} />
-      )}
-      {caseStudy.customerJourney && (
-        <CustomerJourneyStrip journey={caseStudy.customerJourney} />
-      )}
-      <SectionEvidence caseStudy={caseStudy} anchor="observation" />
+      <BusinessEnginesSection story={story} />
+      <AudiencePersonasSection story={story} />
+      <JourneyBreakpointScreen story={story} />
+      <RankedLeaksSection caseStudy={caseStudy} />
+      <FixLayersSection story={story} />
+      <RecommendationSection story={story} />
+      <SystemBlueprintSection story={story} />
 
-      <NarrativeSection
-        label="Investigation"
-        body={getInvestigationNarrative(caseStudy)}
-        step={2}
-        sectionId="cs-investigation"
-        variant="light"
-      />
-      <InvestigationDetailSection investigation={caseStudy.investigation} />
-      <SectionEvidence caseStudy={caseStudy} anchor="evidence" />
-
-      <ProblemsSection caseStudy={caseStudy} />
-
-      {maps.length > 0 && <ProblemSolutionSection maps={maps} />}
-
-      {strategicThesis && (
-        <StrategyThesisSection
-          thesis={strategicThesis}
-          body={strategyBody}
-          step={3}
-        />
+      {implementationMedia.length > 0 && (
+        <SectionEvidence caseStudy={caseStudy} anchor="implementation" />
       )}
 
-      {caseStudy.implementation?.trim() && (
-        <NarrativeSection
-          label="Design / build"
-          body={caseStudy.implementation}
-          step={4}
-          sectionId="cs-implementation"
-        />
-      )}
-      <SectionEvidence caseStudy={caseStudy} anchor="implementation" />
-      <WorkflowsSection workflows={caseStudy.workflows} />
+      <OutcomeShiftTable story={story} />
 
-      {caseStudy.outcome?.trim() && (
-        <NarrativeSection
-          label="Outcome"
-          body={caseStudy.outcome}
-          step={5}
-          sectionId="cs-outcome"
-          variant="light"
-        />
-      )}
-      <SectionEvidence caseStudy={caseStudy} anchor="outcome" />
-
-      {caseStudy.beforeAfter && (
-        <BeforeAfterSection beforeAfter={caseStudy.beforeAfter} />
+      {outcomeMetrics.length > 0 && (
+        <EvidenceImpactSection caseStudy={caseStudy} metrics={outcomeMetrics} />
       )}
 
-      <EvidenceImpactSection
-        caseStudy={caseStudy}
-        metrics={outcomeMetrics}
-      />
+      <CaseStudyRoleStrip story={story} caseStudy={caseStudy} />
 
-      <CaseStudyContentBlocks blocks={blocksScope} />
-      {caseStudy.scopeNote && <ScopeNoteSection note={caseStudy.scopeNote} />}
+      <FullDiagnosticArchive>
+        {getBusinessNarrative(caseStudy) && (
+          <NarrativeSection
+            label="Business context"
+            body={getBusinessNarrative(caseStudy)}
+            step={1}
+          />
+        )}
+        {getInvestigationNarrative(caseStudy) && (
+          <NarrativeSection
+            label="Investigation"
+            body={getInvestigationNarrative(caseStudy)}
+            step={2}
+            variant="light"
+          />
+        )}
+        <InvestigationDetailSection investigation={caseStudy.investigation} />
+        <SectionEvidence caseStudy={caseStudy} anchor="evidence" />
+        {maps.length > 0 && <ProblemSolutionSection maps={maps} />}
+        {strategicThesis && (
+          <StrategyThesisSection thesis={strategicThesis} body={strategyBody} step={3} />
+        )}
+        {caseStudy.implementation?.trim() && (
+          <NarrativeSection label="Implementation" body={caseStudy.implementation} step={4} />
+        )}
+        <WorkflowsSection workflows={caseStudy.workflows} />
+        {caseStudy.outcome?.trim() && (
+          <NarrativeSection
+            label="Outcome narrative"
+            body={caseStudy.outcome}
+            step={5}
+            variant="light"
+          />
+        )}
+        {caseStudy.beforeAfter && <BeforeAfterSection beforeAfter={caseStudy.beforeAfter} />}
+        <CaseStudyContentBlocks blocks={blocksScope} />
+        {caseStudy.scopeNote && <ScopeNoteSection note={caseStudy.scopeNote} />}
+        {testimonial && (
+          <ClientQuoteSection
+            quote={testimonial.quote}
+            attribution={testimonial.attribution}
+          />
+        )}
+        <CaseStudyContentBlocks blocks={blocksQuote} />
+        <TechnologyRoleSection techStack={caseStudy.techStack} role={caseStudy.role} />
+        <CaseStudyContentBlocks blocks={blocksEnd} />
+        {caseStudy.closingBridge && <ClosingBridgeSection text={caseStudy.closingBridge} />}
+      </FullDiagnosticArchive>
 
-      {testimonial && (
-        <ClientQuoteSection
-          quote={testimonial.quote}
-          attribution={testimonial.attribution}
-        />
-      )}
-      <CaseStudyContentBlocks blocks={blocksQuote} />
-
-      {caseStudy.deliverableTeaser && (
-        <DeliverableTeaserSection teaser={caseStudy.deliverableTeaser} />
-      )}
-
-      <TechnologyRoleSection
-        techStack={caseStudy.techStack}
-        role={caseStudy.role}
-      />
-
-      <CaseStudyContentBlocks blocks={blocksEnd} />
-      {caseStudy.closingBridge && (
-        <ClosingBridgeSection text={caseStudy.closingBridge} />
-      )}
-      <CaseStudyProjectNav
-        previous={adjacent.previous}
-        next={adjacent.next}
-      />
-      <CaseStudyCta primaryCta={shell.primaryCta} />
+      <SimilarProblemCta primaryCta={shell.primaryCta} next={adjacent.next} />
     </>
   );
 }

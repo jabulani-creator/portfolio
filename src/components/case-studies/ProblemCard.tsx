@@ -15,7 +15,7 @@ export default function ProblemCard({
   showRecommendedFix = false,
 }: Props) {
   return (
-    <article className="rounded-sm border border-cd-shade/20 bg-white p-8 shadow-sm">
+    <article className="studio-card">
       <div className="flex flex-wrap items-start justify-between gap-2">
         <p className="font-display text-4xl font-bold text-cd-cta/30">
           #{String(index + 1).padStart(2, "0")}

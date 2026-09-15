@@ -5,12 +5,13 @@
 
 ## Principles
 
+- **Show, then tell:** Homepage is a trailer; case studies are the movie. Lead with proof and visual diagnosis, not full deliverables lists.
 - **Palette:** `#f0f0eb` background, `#0a0a0a` text, `#d4d4ce` borders. No teal/orange crutch.
 - **Type:** DM Sans body; JetBrains Mono for `~/`, `[ 01 ]`, terminal, footer `//`, metrics labels.
 - **Buttons:** Compact **pills** — solid black primary, outline secondary, white on dark bands.
 - **Evidence UI:** Findings in cards with **honest labels** — “Projected impact / modeled from journey audit,” never “Solved” without measured data.
-- **Hero:** Terminal panel = one bold developer moment (`diagnostic.sh`).
-- **Methodology:** `[ 01 ] Diagnose` … `[ 04 ] Improve` in bordered cards.
+- **Hero:** One headline + two CTAs — no terminal wall on first screen (see `EditorialHeroSection`).
+- **Methodology:** Discover → Trace → Diagnose → Fix pipeline (`VisualMethodPipelineSection`).
 - **Footer:** Single quiet line: `// Built by a developer, for businesses that want to convert.`
 
 ## Apply everywhere

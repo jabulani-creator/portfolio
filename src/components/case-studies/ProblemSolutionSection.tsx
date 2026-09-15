@@ -80,9 +80,9 @@ export default function ProblemSolutionSection({
 
   return (
     <Section variant="light" id={sectionId}>
-      <p className="studio-eyebrow">How thinking became build</p>
+      <p className="studio-eyebrow">The fix</p>
       <h2 className="mt-3 font-display text-3xl font-bold text-cd-txt">
-        From problems to solutions
+        From diagnosis to build
       </h2>
       <div className="mt-12 space-y-12">
         {allPrimary.map((map, index) => (

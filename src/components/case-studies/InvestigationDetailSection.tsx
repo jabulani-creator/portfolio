@@ -15,7 +15,7 @@ export default function InvestigationDetailSection({
   return (
     <div className="mx-auto w-11/12 max-w-6xl pb-8">
       {investigation.sources && investigation.sources.length > 0 && (
-        <div className="mt-6">
+        <div className="mt-2">
           <p className="font-mono text-[10px] uppercase tracking-wide text-cd-shade">
             Sources
           </p>
@@ -32,13 +32,16 @@ export default function InvestigationDetailSection({
         </div>
       )}
       {investigation.findings && investigation.findings.length > 0 && (
-        <Section variant="default" className="!px-0 !py-8">
+        <Section variant="default" className="!px-0 !py-10">
           <p className="font-mono text-[10px] uppercase tracking-wide text-cd-shade">
-            Key findings
+            Evidence snapshot
           </p>
-          <ul className="mt-4 list-inside list-disc space-y-2 text-sm text-cd-shade">
-            {investigation.findings.map((finding) => (
-              <li key={finding}>{finding}</li>
+          <ul className="mt-6 grid gap-4 md:grid-cols-2">
+            {investigation.findings.map((finding, index) => (
+              <li key={finding} className="studio-card border-l-2 border-l-cd-txt">
+                <p className="mono-index">[ {String(index + 1).padStart(2, "0")} ]</p>
+                <p className="mt-3 text-sm leading-relaxed text-cd-shade">{finding}</p>
+              </li>
             ))}
           </ul>
         </Section>

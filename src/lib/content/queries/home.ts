@@ -25,6 +25,7 @@ export async function getHomePageContent(): Promise<HomePageContent> {
     siteSettings,
     offer,
     featuredCaseStudy: featuredCaseStudies[0] ?? null,
-    caseStudies: featuredCaseStudies.length > 0 ? featuredCaseStudies : caseStudies,
+    caseStudies:
+      caseStudies.length > 0 ? caseStudies : featuredCaseStudies,
   };
 }
