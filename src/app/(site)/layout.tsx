@@ -33,7 +33,7 @@ export default async function SiteLayout({
   const shell = siteSettings ?? getDefaultSiteShell();
 
   return (
-    <html lang="en">
+    <html lang="en" data-scroll-behavior="smooth">
       <body
         className={`${dmSans.variable} ${jetbrains.variable} flex min-h-screen flex-col font-sans`}
       >

@@ -1,32 +1,37 @@
+import Link from "next/link";
 import Section from "@/components/ui/Section";
 
 const pains = [
-  "We get enquiries, but few become customers.",
   "People keep asking questions that are already on our website.",
-  "Facebook gets engagement but almost no bookings.",
-  "Our website looks good but doesn't generate business.",
-  "Our staff spend half the day answering the same WhatsApp questions.",
-  "We don't actually know where customers drop off.",
+  "We get enquiries, but too few become customers.",
+  "Customers can't easily find our location, prices, or services.",
+  "Our staff keep doing manually what a system could handle.",
+  "We're considering a new website, but we're not sure what it should actually do.",
 ];
 
 export default function MirrorPainSection() {
   return (
-    <Section variant="default" className="section-rule">
-      <p className="studio-eyebrow">Sound familiar?</p>
-      <h2 className="mt-3 text-2xl font-bold tracking-tight md:text-3xl">
-        Can you see your business in these?
+    <Section variant="light" className="section-rule border-y border-cd-border py-12 md:py-16">
+      <h2 className="text-xl font-bold text-cd-txt md:text-2xl">
+        Does any of this sound familiar?
       </h2>
-      <ul className="mt-10 space-y-4">
+      <ul className="mt-8 space-y-4">
         {pains.map((line) => (
           <li
             key={line}
-            className="border-l-2 border-cd-txt pl-5 text-sm leading-relaxed text-cd-shade md:text-base"
+            className="border-l-2 border-cd-cta/40 pl-5 text-sm leading-relaxed text-cd-shade md:text-base"
           >
             &ldquo;{line}&rdquo;
           </li>
         ))}
       </ul>
-      <p className="mt-10 text-xl font-bold text-cd-txt">That&apos;s what I investigate.</p>
+      <p className="mt-8 text-sm font-semibold text-cd-txt">
+        If you recognize the problem,{" "}
+        <Link href="/start-a-project" className="underline-offset-4 hover:underline">
+          let&apos;s talk
+        </Link>
+        .
+      </p>
     </Section>
   );
 }

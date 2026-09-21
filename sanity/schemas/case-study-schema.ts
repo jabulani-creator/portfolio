@@ -1,3 +1,5 @@
+import { caseStudyV2Fields } from "./case-study-v2-fields";
+
 const problemCategoryList = [
   { title: "Revenue", value: "revenue" },
   { title: "Operations", value: "operations" },
@@ -53,30 +55,24 @@ const caseStudy = {
   title: "Case Study",
   type: "document",
   groups: [
-    { name: "identity", title: "Identity", default: true },
-    { name: "business", title: "Business context" },
-    { name: "investigation", title: "Investigation" },
-    { name: "spine", title: "Narrative spine (editor)" },
-    { name: "problems", title: "Problems" },
-    { name: "maps", title: "Problem → solution maps" },
-    { name: "strategy", title: "Strategy" },
-    { name: "outcomes", title: "Outcomes & evidence" },
-    { name: "media", title: "Media & deliverables" },
-    { name: "meta", title: "Publishing & SEO" },
+    { name: "overview", title: "Overview", default: true },
+    { name: "story", title: "Story" },
+    { name: "proof", title: "Proof and deep dive" },
+    { name: "legacy", title: "Legacy (v1)", hidden: true },
   ],
-  fields: [
+  fields: [...caseStudyV2Fields,
     {
       name: "title",
       title: "Title",
       type: "string",
-      group: "identity",
+      group: "overview",
       validation: (Rule: { required: () => unknown }) => Rule.required(),
     },
     {
       name: "slug",
       title: "Slug",
       type: "slug",
-      group: "identity",
+      group: "overview",
       options: { source: "title" },
       validation: (Rule: { required: () => unknown }) => Rule.required(),
     },
@@ -84,7 +80,7 @@ const caseStudy = {
       name: "showOnWebsite",
       title: "Show on public website",
       type: "boolean",
-      group: "meta",
+      group: "overview",
       description:
         "When on, the portfolio loads this case study from Sanity (including hero image). This is separate from Studio’s top “Publish” button — edit the draft, turn this on, then Publish.",
       initialValue: false,
@@ -93,7 +89,7 @@ const caseStudy = {
       name: "isPublished",
       title: "Show on website (legacy)",
       type: "boolean",
-      group: "meta",
+      group: "overview",
       hidden: true,
       initialValue: false,
     },
@@ -101,14 +97,14 @@ const caseStudy = {
       name: "featured",
       title: "Featured on homepage",
       type: "boolean",
-      group: "meta",
+      group: "overview",
       initialValue: false,
     },
     {
       name: "category",
       title: "Category (filters)",
       type: "string",
-      group: "identity",
+      group: "overview",
       options: {
         list: [
           { title: "Business Diagnostic", value: "diagnostic" },
@@ -123,7 +119,7 @@ const caseStudy = {
       name: "projectType",
       title: "Project type (hero tags)",
       type: "array",
-      group: "identity",
+      group: "overview",
       of: [{ type: "string" }],
       options: {
         list: projectTypeList,
@@ -136,7 +132,7 @@ const caseStudy = {
       name: "oneLineThesis",
       title: "One-line thesis",
       type: "string",
-      group: "identity",
+      group: "overview",
       description: "Subtitle under the project title on the case study page",
     },
     {
@@ -144,7 +140,7 @@ const caseStudy = {
       title: "Strategic thesis",
       type: "text",
       rows: 2,
-      group: "strategy",
+      group: "legacy",
       description:
         'Public strategy headline — e.g. "Make worship easy. Make administration easy." Falls back to Decision spine if empty.',
     },
@@ -152,56 +148,56 @@ const caseStudy = {
       name: "role",
       title: "Role",
       type: "string",
-      group: "identity",
+      group: "overview",
       description: "e.g. Digital Strategy · UX · Development",
     },
     {
       name: "context",
       title: "Context",
       type: "string",
-      group: "identity",
+      group: "overview",
       description: "e.g. Business Diagnostic + Digital Platform",
     },
     {
       name: "period",
       title: "Period",
       type: "string",
-      group: "identity",
+      group: "overview",
       description: "e.g. 2026",
     },
     {
       name: "projectTags",
       title: "Project tags (display)",
       type: "string",
-      group: "identity",
+      group: "overview",
       description: "Comma-separated tags shown on cards",
     },
     {
       name: "clientLabel",
       title: "Client Label",
       type: "string",
-      group: "identity",
+      group: "overview",
       description: "Public-safe client name or anonymised label",
     },
     {
       name: "liveUrl",
       title: "Live site / product URL",
       type: "url",
-      group: "identity",
+      group: "overview",
       description: "Optional link shown on the case study (verify real engagement)",
     },
     {
       name: "engagementDuration",
       title: "Engagement duration",
       type: "string",
-      group: "identity",
+      group: "overview",
       description: "e.g. Diagnostic: 6 working days · Build: 10 weeks",
     },
     {
       name: "engagementType",
       title: "Engagement type",
       type: "string",
-      group: "identity",
+      group: "overview",
       options: {
         list: [
           { title: "Named client engagement", value: "client" },
@@ -215,13 +211,13 @@ const caseStudy = {
       name: "contextSummary",
       title: "Context Summary",
       type: "string",
-      group: "business",
+      group: "legacy",
     },
     {
       name: "businessContext",
       title: "Business context (structured)",
       type: "object",
-      group: "business",
+      group: "legacy",
       description:
         "Optional — public page uses businessDescription with fallback to Observation spine",
       fields: [
@@ -264,20 +260,20 @@ const caseStudy = {
       title: "Excerpt",
       type: "text",
       rows: 3,
-      group: "identity",
+      group: "overview",
     },
     {
       name: "observation",
       title: "Observation (The business / problem context)",
       type: "text",
       rows: 5,
-      group: "spine",
+      group: "legacy",
     },
     {
       name: "contextStats",
       title: "Context stats",
       type: "array",
-      group: "business",
+      group: "legacy",
       description: "2–4 grounding numbers shown after The business (optional)",
       of: [
         {
@@ -293,7 +289,7 @@ const caseStudy = {
       name: "investigation",
       title: "Investigation (structured)",
       type: "object",
-      group: "investigation",
+      group: "legacy",
       fields: [
         { name: "approach", title: "Approach", type: "text", rows: 3 },
         {
@@ -316,13 +312,13 @@ const caseStudy = {
       title: "Evidence (Investigation spine)",
       type: "text",
       rows: 5,
-      group: "spine",
+      group: "legacy",
     },
     {
       name: "problems",
       title: "Problems identified",
       type: "array",
-      group: "problems",
+      group: "legacy",
       description:
         "Public page shows top 3 by priority. Legacy revenueLeaks migrate at read time if this is empty.",
       of: [
@@ -370,7 +366,7 @@ const caseStudy = {
       name: "problemSolutionMaps",
       title: "Problem → solution maps",
       type: "array",
-      group: "maps",
+      group: "legacy",
       description:
         "Primary maps drive the public hero section. Write problem → why → decision → solution → implementation → outcome.",
       of: [
@@ -423,13 +419,13 @@ const caseStudy = {
       title: "Decision (Strategy spine)",
       type: "text",
       rows: 5,
-      group: "spine",
+      group: "legacy",
     },
     {
       name: "workflows",
       title: "Workflows",
       type: "array",
-      group: "strategy",
+      group: "legacy",
       description: "Optional — simple step lists for the system section",
       of: [
         {
@@ -451,7 +447,7 @@ const caseStudy = {
       title: "Implementation (Design / build)",
       type: "text",
       rows: 5,
-      group: "spine",
+      group: "legacy",
       description: "What was built",
     },
     {
@@ -459,7 +455,7 @@ const caseStudy = {
       title: "Outcome",
       type: "text",
       rows: 5,
-      group: "spine",
+      group: "legacy",
       description: "What changed — label targets clearly if not measured yet",
     },
     {
@@ -467,7 +463,7 @@ const caseStudy = {
       title: "Scope note",
       type: "text",
       rows: 3,
-      group: "outcomes",
+      group: "proof",
       description:
         "Optional — what this engagement did not cover (builds trust via candor)",
     },
@@ -475,7 +471,7 @@ const caseStudy = {
       name: "evidenceRecords",
       title: "Evidence records",
       type: "array",
-      group: "outcomes",
+      group: "legacy",
       of: [
         {
           type: "object",
@@ -513,7 +509,7 @@ const caseStudy = {
       name: "testimonial",
       title: "Testimonial (structured)",
       type: "object",
-      group: "outcomes",
+      group: "legacy",
       fields: [
         { name: "quote", title: "Quote", type: "text", rows: 3 },
         { name: "person", title: "Person", type: "string" },
@@ -531,7 +527,7 @@ const caseStudy = {
       name: "evidenceMedia",
       title: "Evidence media",
       type: "array",
-      group: "media",
+      group: "legacy",
       of: [
         {
           type: "object",
@@ -581,7 +577,7 @@ const caseStudy = {
       name: "deliverableTeaser",
       title: "Deliverable excerpt",
       type: "object",
-      group: "media",
+      group: "proof",
       description: "Optional download — sample page from diagnostic report or SRS",
       fields: [
         { name: "label", title: "Link label", type: "string" },
@@ -603,7 +599,7 @@ const caseStudy = {
       name: "techStack",
       title: "Tech stack / tools",
       type: "array",
-      group: "media",
+      group: "proof",
       of: [{ type: "string" }],
       options: { layout: "tags" },
       description: "Shown at bottom of public case study",
@@ -612,7 +608,7 @@ const caseStudy = {
       name: "beforeAfter",
       title: "Before & after",
       type: "object",
-      group: "outcomes",
+      group: "legacy",
       fields: [
         {
           name: "headline",
@@ -643,7 +639,7 @@ const caseStudy = {
       title: "Closing bridge",
       type: "text",
       rows: 2,
-      group: "outcomes",
+      group: "legacy",
       description:
         'Optional — tie this story to the reader (e.g. "If your site hides pricing…")',
     },
@@ -651,7 +647,7 @@ const caseStudy = {
       name: "contentBlocks",
       title: "Content blocks (optional)",
       type: "array",
-      group: "media",
+      group: "legacy",
       description:
         "Extra callouts or pull quotes — use when plain narrative fields are not enough",
       of: [
@@ -709,7 +705,7 @@ const caseStudy = {
       name: "outcomeHighlight",
       title: "Outcome Highlight (card)",
       type: "string",
-      group: "outcomes",
+      group: "legacy",
       description:
         "One line on work cards, e.g. 3 revenue leaks identified → booking path redesigned",
     },
@@ -717,7 +713,7 @@ const caseStudy = {
       name: "outcomeMetrics",
       title: "Outcome metrics",
       type: "array",
-      group: "outcomes",
+      group: "legacy",
       of: [
         {
           type: "object",
@@ -738,7 +734,7 @@ const caseStudy = {
       name: "outcomeMetric",
       title: "Outcome metric (legacy)",
       type: "object",
-      group: "outcomes",
+      group: "legacy",
       description: "Deprecated — use Outcome metrics list above",
       fields: [
         { name: "label", title: "Label", type: "string" },
@@ -756,26 +752,26 @@ const caseStudy = {
       title: "Client Quote (legacy)",
       type: "text",
       rows: 3,
-      group: "outcomes",
+      group: "legacy",
     },
     {
       name: "clientQuoteAttribution",
       title: "Client Quote Attribution",
       type: "string",
-      group: "outcomes",
+      group: "legacy",
     },
     {
       name: "customerJourney",
       title: "Customer journey (display)",
       type: "string",
-      group: "business",
+      group: "legacy",
       description: "e.g. Discovery → Evaluation → Pricing → Booking",
     },
     {
       name: "revenueLeaks",
       title: "Legacy findings / revenue leaks",
       type: "array",
-      group: "problems",
+      group: "legacy",
       description: "Deprecated — use Problems identified. Still migrated on the site if problems[] is empty.",
       of: [
         {
@@ -794,7 +790,7 @@ const caseStudy = {
       name: "heroImage",
       title: "Hero Image",
       type: "image",
-      group: "media",
+      group: "story",
       options: { hotspot: true },
       fields: [{ name: "alt", title: "Alt", type: "string" }],
     },
@@ -802,19 +798,19 @@ const caseStudy = {
       name: "publishedAt",
       title: "Published At",
       type: "datetime",
-      group: "meta",
+      group: "overview",
     },
     {
       name: "seoTitle",
       title: "SEO Title",
       type: "string",
-      group: "meta",
+      group: "overview",
     },
     {
       name: "seoDescription",
       title: "SEO Description",
       type: "text",
-      group: "meta",
+      group: "overview",
     },
   ],
 };

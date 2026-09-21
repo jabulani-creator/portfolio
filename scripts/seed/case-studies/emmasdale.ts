@@ -1,9 +1,17 @@
 import { emmasdaleEvidence } from "../../../src/lib/content/caseStudyEvidenceContent";
+import { buildEmmasdaleV2MarketingFields } from "./emmasdale-v2-marketing";
 
 /**
  * Emmasdale SDA Church — Sanity caseStudy document (text only).
  * Source: client diagnostic (June 2026) + member guide + emmasdalesda.org
- * Images: add hero + evidenceMedia in Studio after seed.
+ *
+ * After `npm run seed:sanity`, add in Studio:
+ * - Hero image (+ alt)
+ * - Story → What I built → Screenshot (+ caption/alt) per row
+ * - Problem stories → Card image (optional, for home catalog)
+ * - Proof → Proof media (archive gallery)
+ * - SEO title / description (optional)
+ * - Client quote attribution (real name if approved)
  */
 
 export const EMMASDALE_CASE_STUDY_ID = "caseStudy-emmasdale-sda-church";
@@ -123,5 +131,6 @@ The next challenge is governance and rhythm: named content owners, care response
       },
     ],
     publishedAt: new Date().toISOString(),
+    ...buildEmmasdaleV2MarketingFields(),
   };
 }

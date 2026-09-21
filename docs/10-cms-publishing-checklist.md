@@ -10,12 +10,11 @@ Until documents are **Published** in Sanity (`/admin`), the public site uses fal
 2. **Offer** (slug `digital-experience-diagnostic`) — **Published** ✓  
    - `priceLabel`, `priceNote`, summary, deliverables, **FAQ**
 
-3. **Case Studies** — Emmasdale & Nikwisa (seed or hand-enter) — **Published** when ready  
-   - Hero image + **alt text**, `featured`, category, narrative fields, `revenueLeaks` / findings where relevant  
-   - **Phase A trust fields:** `liveUrl`, `engagementDuration`, `engagementType`, **`outcomeMetrics`** (list; legacy single metric still works)  
-   - **Phase B proof fields:** `contextStats`, `scopeNote`, **`evidenceMedia`** (per section), optional **`deliverableTeaser`** (PDF/URL excerpt)  
-   - **Phase C depth:** **`techStack`**, **`beforeAfter`**, **`closingBridge`** (UI screenshots still via evidence media on Implementation)  
-   - **Phase D extras:** **`contentBlocks`** (callouts / pull quotes)
+3. **Case Studies** — use **Overview / Story / Proof** tabs (see `docs/13-case-study-cms-field-reference.md`)  
+   - **Show on public website** + Studio **Publish**  
+   - Story: hero, challenge, **platform columns**, what I built  
+   - Proof: **outcomes[]**, optional **deep dive**  
+   - Migrate v1 docs: `npx tsx scripts/migrate-case-study-v2.ts --dry-run` then `--apply` after `sanity dataset export`
 
 ## Seeding case studies
 
@@ -27,8 +26,9 @@ npm run seed:sanity
 ```
 
 - Script: `scripts/seed-sanity.ts`  
-- Emmasdale payload: `scripts/seed/case-studies/emmasdale.ts`  
-- Default **`isPublished: false`** — review in Studio, add images, then Publish.  
+- Emmasdale payload: `scripts/seed/case-studies/emmasdale.ts` + v2 marketing copy in `emmasdale-v2-marketing.ts` (platform columns, what I built text, **4 problem stories**, outcomes).  
+- After seed, add manually in Studio: **hero**, **What I built screenshots**, optional **problem story card images**, **proof media**, SEO, quote name.  
+- Default **`isPublished: false`** — review in Studio, then Publish.  
 - `SEED_PUBLISH=true` only when you want docs live immediately.
 
 Second project: **`scripts/seed/case-studies/nikwisa.ts`** (and Emmasdale). Run `npm run seed:sanity` — no Kwisoko fallback in code.

@@ -4,23 +4,26 @@ export default function OfferPositioningSection() {
   return (
     <Section className="bg-white">
       <h2 className="text-2xl font-semibold text-cd-txt">
-        Diagnostic first. Build only if needed.
+        Diagnose when it helps. Build what actually fixes the problem.
       </h2>
       <div className="mt-4 space-y-4 leading-relaxed text-cd-shade">
         <p>
-          The <strong className="font-medium text-cd-txt">Digital Experience Diagnostic</strong> is
-          the entry product. It is designed to be booked first — scoped, priced,
-          and delivered in about a week.
+          The{" "}
+          <strong className="font-medium text-cd-txt">
+            Digital Experience Diagnostic
+          </strong>{" "}
+          is a structured investigation — useful when we need evidence before
+          committing budget to the wrong solution.
         </p>
         <p>
           Website builds, booking systems, and automation are{" "}
-          <strong className="font-medium text-cd-txt">follow-on work</strong> —
-          priced per scope, and only recommended when the diagnostic shows they
-          are the right fix.
+          <strong className="font-medium text-cd-txt">follow-on work</strong>{" "}
+          when the problem calls for it — scoped and quoted from what we learn,
+          not from guesswork.
         </p>
         <p>
-          If you only need clarity on where customers get stuck, you do not need
-          to commit to a full build to get value from this engagement.
+          For larger projects, discovery and requirements work may be folded into
+          the project instead of a standalone diagnostic. We decide that together.
         </p>
       </div>
     </Section>

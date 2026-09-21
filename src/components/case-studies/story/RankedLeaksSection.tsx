@@ -4,18 +4,23 @@ import { frictionScore, getLeaksForDisplay } from "@/lib/caseStudyVisualHelpers"
 
 type Props = {
   caseStudy: Pick<CaseStudy, "problems" | "revenueLeaks">;
+  heading?: string;
 };
 
-export default function RankedLeaksSection({ caseStudy }: Props) {
+export default function RankedLeaksSection({
+  caseStudy,
+  heading = "revenue leaks",
+}: Props) {
   const leaks = getLeaksForDisplay(caseStudy, 3);
   if (!leaks.length) return null;
 
+  const title =
+    heading !== "revenue leaks" ? heading : `The ${leaks.length} revenue leaks`;
+
   return (
     <Section variant="light" id="cs-leaks" className="section-rule border-y border-cd-border">
-      <p className="studio-eyebrow">The leak</p>
-      <h2 className="mt-3 text-2xl font-bold tracking-tight md:text-3xl">
-        The {leaks.length} revenue leaks
-      </h2>
+      <p className="studio-eyebrow">Friction</p>
+      <h2 className="mt-3 text-2xl font-bold tracking-tight md:text-3xl">{title}</h2>
       <ul className="mt-10 space-y-8">
         {leaks.map((problem, index) => {
           const score = frictionScore(problem, index);

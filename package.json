@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "eslint .",
     "seed:sanity": "npx tsx scripts/seed-sanity.ts",
-    "sanity:verify": "npx tsx scripts/verify-sanity-project.ts"
+    "sanity:verify": "npx tsx scripts/verify-sanity-project.ts",
+    "audit:case-studies": "npx tsx scripts/audit-case-study-visibility.ts",
+    "migrate:case-studies": "npx tsx scripts/migrate-case-study-v2.ts"
   },
   "dependencies": {
     "@portabletext/react": "^3.2.1",

@@ -1,84 +1,87 @@
-# Case study — CMS field reference
+# Case study — CMS field reference (v2)
 
 Quick reference for **`caseStudy`** documents in `/admin`. Public template: `/case-studies/[slug]`.
+
+## Studio tabs (3)
+
+| Tab | What you edit |
+|-----|----------------|
+| **Overview** | Title, slug, excerpt, category, role, publish flags, SEO, page layout |
+| **Story** | Hero image, hero subtitle, deliverables, challenge, platform columns, what I built, **problem stories**, before/after, approach |
+| **Proof and deep dive** | Outcomes, proof media, tech stack, scope note, deliverable teaser, optional deep dive |
+
+**Editorial rule:** Platform columns = main scroll index. **What I built** = product screenshots. **Problem stories** = workflow stories (band + optional home). Archive still reads structured `solution.*` on every public thread.
+
+## Problem stories (`storyThreads[]`)
+
+One row per workflow story (e.g. quarterly reports). Write once in Studio.
+
+| Field | Use |
+|-------|-----|
+| `description` | Card hook — old friction in a few lines (do not paste the full narrative here) |
+| `narrative` | Full story on the case study band (portfolio voice, roles, texture) |
+| `buildChallenge` | Optional “while building” |
+| `solution.outcome` | How it works **now** — one beat, not a repeat of `narrative` |
+| `solution.decision` / `implementation` | Archive / Problem → solution section |
+| `threadKey` | Globally unique slug (e.g. `emmasdale-quarterly-reports`) for `#problem-{threadKey}` anchors |
+| `placement` | **Single control** — see below |
+| `editorialMeta.visibility` | `private` or `internal` hides the thread **everywhere**, regardless of placement |
+| `priority` | Sort order (1 = first) within case study; home strip uses the same order, max 4 cards |
+| `cardEyebrow`, `cardImage` | Home catalog card (optional) |
+
+### `placement` (one enum — no extra booleans)
+
+| Value | Public surfaces |
+|-------|-----------------|
+| `archiveOnly` | Collapsed archive only (default) |
+| `caseStudyMain` | Case study band **Problems I solved** |
+| `caseStudyAndHome` | Case study band + home strip (curated; links to case study anchor) |
+
+Phase 2 (not built yet): index page at `/on-the-ground` when enough stories exist.
+
+Copy tone: **portfolio, conversational** (clerk, paper, conference) — not dev-log, not consultant-speak.
 
 ## Required to publish
 
 | Field | Notes |
 |-------|--------|
-| Title, Slug, **Published** ✓ | |
-| Excerpt or one-line thesis | Card + header |
-| Observation → Outcome (spine) | Five narrative fields |
+| Title, Slug, **Show on public website** | Publish in Studio after edits |
+| Excerpt | Cards, SEO, hero context fallback |
 | Category | diagnostic · build · strategy · software |
 
-## Trust (Phase A)
+## Story (main page)
 
 | Field | Public use |
 |-------|------------|
-| `liveUrl` | “View live site ↗” in header |
-| `engagementDuration` | Meta row + work cards |
-| `engagementType` | Privacy/composite line when not `client` |
-| `outcomeMetrics[]` | Evidence & impact (legacy single metric still works) |
-| Hero image **alt** | Accessibility |
+| `heroImage` + alt | Full-bleed hero |
+| `heroSubtitle` | Under title |
+| `deliverables[]` | “Delivered” pills |
+| `challenge` | Problem band (headline, signals) |
+| `platformColumns[]` | Feature columns (any count) |
+| `whatBuilt[]` | Main scroll product tour — title, body, optional caption, **screenshot per row**. **Live site reads only this field** (empty = section hidden). Match **story thread** titles (e.g. Prayer wall) for archive depth only. |
+| `storyBeforeAfter` | Before/after band |
+| `approach` | Method (optional — site uses static 5 steps if empty) |
 
-## Proof (Phase B)
-
-| Field | Public use |
-|-------|------------|
-| `contextStats[]` | “At a glance” after The business |
-| `evidenceMedia[]` | Images after chosen spine section |
-| `scopeNote` | Scope & limits callout |
-| `deliverableTeaser` | Download excerpt CTA |
-
-## Depth (Phase C)
+## Proof
 
 | Field | Public use |
 |-------|------------|
-| `techStack[]` | Footer “Technology & role” (with `role`) |
-| `beforeAfter` | Comparison block |
-| `closingBridge` | Reader tie-in before project nav |
-| Sticky nav | Business · Investigation · Problems · Solutions · Impact |
+| `outcomes[]` | type: metric · shift · highlight · quote |
+| `proofMedia[]` | Archive gallery |
+| `techStack`, `scopeNote`, `deliverableTeaser` | Footer / trust |
+| `deepDive` | “Behind the build” — hide section if empty |
 
-## Extra blocks (Phase D)
+## Legacy v1 fields
 
-| Field | Public use |
-|-------|------------|
-| `contentBlocks[]` | Callout or pull quote before **scope**, **quote**, or **end** |
+Hidden in Studio under **Legacy (v1)**. Still read from the API until documents are patched with `scripts/migrate-case-study-v2.ts`. Do not author new content there.
 
-## Story engine (Phase E)
+## Scripts
 
-| Field | Public use |
-|-------|------------|
-| `projectType[]` | Hero tags (Digital Platform, Marketplace, …) |
-| `strategicThesis` | Strategy headline (falls back to Decision spine) |
-| `problems[]` | Top 3 by priority — “Problems identified” |
-| `problemSolutionMaps[]` | Primary maps — “From problems to solutions” |
-| `revenueLeaks[]` | Legacy; migrated to problems at read time if `problems[]` empty |
+```bash
+npx tsx scripts/audit-case-study-visibility.ts
+sanity dataset export <dataset> backup.tar.gz
+npx tsx scripts/migrate-case-study-v2.ts --dry-run
+npx tsx scripts/migrate-case-study-v2.ts --apply
+```
 
-## Context & investigation (Phase F)
-
-| Field | Public use |
-|-------|------------|
-| `businessContext` | `businessDescription` (+ optional audiences, channels, goals); fallback Observation |
-| `investigation` | Sources tags + findings list; merged with Evidence spine |
-| `workflows[]` | Up to 2 workflow diagrams after Design / build |
-
-## Evidence layer (Phase G)
-
-| Field | Public use |
-|-------|------------|
-| `evidenceRecords[]` | Typed proof in Evidence & impact (respects `visibility`) |
-| `testimonial` | Structured quote (falls back to `clientQuote`) |
-| `importance` / `visibility` | On problems, maps, evidence — primary shown first |
-
-## Editor UX (Phase H)
-
-Sanity field **groups**: Identity, Business context, Investigation, Narrative spine, Problems, Problem→solution maps, Strategy, Outcomes & evidence, Media, Publishing & SEO.
-
-## Editorial (always)
-
-- Prefer **`problems[]` + maps** over legacy leaks-only stories  
-- `customerJourney` — optional strip after business context  
-- Mark metrics **projected** when not measured  
-
-Full strategy: `docs/12-case-study-data-strategy.md`. **Evidence model:** `docs/14-portfolio-case-study-evidence-model.md`.
+`whatBuilt[]` backfill order during migrate: existing CMS rows → legacy v1 / `marketingPage.buildSections` → optional slug seeds in `scripts/case-study-migration-seeds.ts` (not used at runtime).

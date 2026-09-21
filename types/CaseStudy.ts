@@ -229,7 +229,10 @@ type CaseStudy = {
   seoTitle?: string;
   seoDescription?: string;
   publishedAt?: string;
-};
+  /** When false, uses legacy long-form case study layout. Default: marketing layout. */
+  useMarketingPageLayout?: boolean;
+  marketingPage?: import("./CaseStudyMarketingPage").CaseStudyMarketingPage;
+} & import("./CaseStudyV2").CaseStudyV2Fields;
 
 export default CaseStudy;
 
@@ -373,9 +376,22 @@ export function getPublicEvidenceRecords(
 export function getTestimonialDisplay(
   study: Pick<
     CaseStudy,
-    "testimonial" | "clientQuote" | "clientQuoteAttribution"
+    "testimonial" | "clientQuote" | "clientQuoteAttribution" | "outcomes"
   >
 ): { quote: string; attribution?: string } | null {
+  const publicQuote = study.outcomes?.find(
+    (o) =>
+      o.type === "quote" &&
+      o.quote?.trim() &&
+      o.visibility !== "private" &&
+      o.visibility !== "internal"
+  );
+  if (publicQuote?.quote?.trim()) {
+    return {
+      quote: publicQuote.quote.trim(),
+      attribution: publicQuote.attribution,
+    };
+  }
   const t = study.testimonial;
   if (t?.quote?.trim() && t.permissionToPublish !== false) {
     const parts = [t.person, t.role, t.organization].filter(Boolean);

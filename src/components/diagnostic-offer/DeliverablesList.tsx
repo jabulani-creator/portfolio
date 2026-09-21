@@ -2,19 +2,31 @@ import { OfferDeliverable } from "../../../types/Offer";
 
 type Props = {
   deliverables: OfferDeliverable[];
+  numbered?: boolean;
 };
 
-export default function DeliverablesList({ deliverables }: Props) {
+export default function DeliverablesList({ deliverables, numbered }: Props) {
   const sorted = [...deliverables].sort((a, b) => a.order - b.order);
 
   return (
     <ol className="space-y-6">
       {sorted.map((item, index) => (
-        <li key={item.title} className="border-l-2 border-cd-cta pl-4">
+        <li key={item.title} className="border-l-2 border-cd-cta pl-4 md:pl-5">
           <p className="font-semibold text-cd-txt">
-            {index + 1}. {item.title}
+            {numbered ? (
+              <>
+                <span className="font-mono text-xs text-cd-shade">
+                  {String(index + 1).padStart(2, "0")} —{" "}
+                </span>
+                {item.title}
+              </>
+            ) : (
+              <>
+                {index + 1}. {item.title}
+              </>
+            )}
           </p>
-          <p className="mt-1 text-sm leading-relaxed text-cd-shade">
+          <p className="mt-2 text-sm leading-relaxed text-cd-shade">
             {item.description}
           </p>
         </li>

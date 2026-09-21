@@ -6,33 +6,36 @@ type Props = {
   productName: string;
   primaryCta: PrimaryCtaType;
   turnaround?: string;
-  priceLabel?: string;
 };
 
 export default function OfferFinalCta({
   productName,
   primaryCta,
   turnaround,
-  priceLabel,
 }: Props) {
+  const cta = {
+    ...primaryCta,
+    label: "Start a conversation",
+    href: primaryCta.href || "/start-a-project",
+  };
+
   return (
     <Section variant="dark">
       <h2 className="font-display text-3xl font-bold">
-        Book the {productName}
+        Not sure if a {productName} is the right next step?
       </h2>
       <p className="mt-4 max-w-xl leading-relaxed text-white/75">
-        You will know what you get, by when, and for how much — before any build
-        conversation starts.
+        Start with a short conversation. I&apos;ll recommend the appropriate
+        scope — diagnostic, discovery, or a direct build path — and provide a
+        clear quotation before any work begins.
       </p>
-      {(turnaround || priceLabel) && (
+      {turnaround && (
         <p className="mt-4 text-sm text-white/60">
-          {turnaround && <span>{turnaround}</span>}
-          {turnaround && priceLabel && <span> · </span>}
-          {priceLabel && <span>{priceLabel}</span>}
+          Typical diagnostic delivery: {turnaround} once scope is agreed
         </p>
       )}
       <div className="mt-8">
-        <PrimaryCta cta={primaryCta} variant="inverse" />
+        <PrimaryCta cta={cta} variant="inverse" />
       </div>
     </Section>
   );

@@ -2,7 +2,7 @@
 
 **Purpose:** Decide what every case study document in Sanity must carry so past and future projects (diagnostic, build, hybrid platform) tell one consistent sales story — without admin jargon on the public site.
 
-**Status:** Phases A–D + **E–H (evidence model)** implemented in code; see `docs/14-portfolio-case-study-evidence-model.md`  
+**Status:** v2 CMS (3-tab model) implemented — see `docs/13-case-study-cms-field-reference.md`. Legacy v1 fields remain in API until `npm run migrate:case-studies -- --apply`.  
 **Related:** `types/CaseStudy.ts`, `sanity/schemas/case-study-schema.ts`, `docs/02-product-scope.md`, `docs/10-cms-publishing-checklist.md`
 
 ---

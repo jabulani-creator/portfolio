@@ -32,7 +32,7 @@ export default function VisualMethodPipelineSection() {
     <Section variant="default" id="methodology" className="section-rule">
       <p className="studio-eyebrow">The method</p>
       <h2 className="mt-3 text-2xl font-bold tracking-tight md:text-3xl">
-        I don&apos;t start with the website.
+        Discover → Trace → Diagnose → Fix
       </h2>
       <ol className="mt-12 space-y-0">
         {steps.map((step, i) => (

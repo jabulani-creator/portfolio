@@ -3,17 +3,22 @@ import type { CaseStudyStoryLayer } from "@/lib/content/caseStudyStoryContent";
 
 type Props = {
   story: CaseStudyStoryLayer;
+  /** Override default "revenue engines" heading (e.g. church case studies) */
+  enginesTitle?: string;
 };
 
-export default function BusinessEnginesSection({ story }: Props) {
+export default function BusinessEnginesSection({ story, enginesTitle }: Props) {
   if (!story.revenueEngines?.length) return null;
+
+  const count = story.revenueEngines.length;
+  const heading =
+    enginesTitle ??
+    `${count} revenue engine${count === 1 ? "" : "s"}`;
 
   return (
     <Section variant="default" id="cs-business">
       <p className="studio-eyebrow">The business</p>
-      <h2 className="mt-3 text-2xl font-bold tracking-tight md:text-3xl">
-        {story.revenueEngines.length} revenue engines
-      </h2>
+      <h2 className="mt-3 text-2xl font-bold tracking-tight md:text-3xl">{heading}</h2>
       <div className="mt-10 grid gap-4 sm:grid-cols-3">
         {story.revenueEngines.map((engine) => (
           <article key={engine.label} className="studio-card text-center">

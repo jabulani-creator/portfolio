@@ -3,10 +3,61 @@ import { sanityClient } from "../client";
 import CaseStudy from "../../../../types/CaseStudy";
 import { getDefaultCaseStudies } from "../defaults";
 import {
+  filterPublicCaseStudies,
+  isPublicCaseStudySlug,
+} from "../caseStudyVisibility";
+import {
   getDeliverableTeaserHref,
   getOutcomeMetrics,
   getProblems,
 } from "../../../../types/CaseStudy";
+import { mergeV2OntoCaseStudy } from "../toCaseStudyPageModel";
+
+const caseStudyV2Projection = groq`
+  layout,
+  heroSubtitle,
+  deliverables,
+  challenge,
+  featuresSectionTitle,
+  platformColumns,
+  whatBuilt[]{
+    title,
+    body,
+    caption,
+    "imageUrl": image.asset->url,
+    "imageAlt": image.alt
+  },
+  storyBeforeAfter,
+  approach,
+  storyThreads[]{
+    title,
+    threadKey,
+    description,
+    narrative,
+    buildChallenge,
+    placement,
+    cardEyebrow,
+    category,
+    priority,
+    editorialMeta,
+    "cardImageUrl": cardImage.asset->url,
+    "cardImageAlt": cardImage.alt,
+    solution{
+      decision,
+      implementation,
+      features,
+      outcome
+    }
+  },
+  proofMedia[]{
+    caption,
+    kind,
+    "url": image.asset->url,
+    "alt": image.alt
+  },
+  outcomes,
+  deepDive
+`;
 
 const caseStudyProjection = groq`{
   _id,
@@ -84,7 +135,40 @@ const caseStudyProjection = groq`{
   "heroImageAlt": heroImage.alt,
   seoTitle,
   seoDescription,
-  publishedAt
+  publishedAt,
+  useMarketingPageLayout,
+  marketingPage{
+    heroSubtitle,
+    roleLine,
+    heroContext,
+    deliverables,
+    problemTitle,
+    problemSignals,
+    opportunity,
+    featuresSectionTitle,
+    features[]{
+      label,
+      items
+    },
+    buildSections[]{
+      title,
+      body,
+      "imageUrl": image.asset->url,
+      "imageAlt": image.alt
+    },
+    beforeItems,
+    afterItems,
+    outcomeShifts[]{
+      before,
+      after
+    },
+    approachIntro,
+    approachSteps[]{
+      name,
+      detail
+    }
+  },
+  ${caseStudyV2Projection}
 }`;
 
 function normalizeCaseStudy(study: CaseStudy): CaseStudy {
@@ -101,12 +185,17 @@ function normalizeCaseStudy(study: CaseStudy): CaseStudy {
 
   const problemsNormalized = getProblems(study);
 
-  return {
+  const merged = mergeV2OntoCaseStudy({
     ...study,
     problems: problemsNormalized.length ? problemsNormalized : undefined,
     outcomeMetrics: outcomeMetrics.length ? outcomeMetrics : undefined,
     deliverableTeaser,
-  };
+    outcomeHighlight:
+      study.outcomeHighlight ||
+      study.outcomes?.find((o) => o.type === "highlight")?.value,
+  });
+
+  return merged;
 }
 
 function normalizeList(studies: CaseStudy[]): CaseStudy[] {
@@ -118,9 +207,9 @@ export async function getCaseStudies(): Promise<CaseStudy[]> {
     groq`*[_type == "caseStudy" && (showOnWebsite == true || isPublished == true)] | order(featured desc, publishedAt desc)${caseStudyProjection}`
   );
   if (fromCms.length > 0) {
-    return normalizeList(fromCms);
+    return normalizeList(filterPublicCaseStudies(fromCms));
   }
-  return normalizeList(getDefaultCaseStudies());
+  return normalizeList(filterPublicCaseStudies(getDefaultCaseStudies()));
 }
 
 export async function getFeaturedCaseStudies(): Promise<CaseStudy[]> {
@@ -135,6 +224,9 @@ export async function getFeaturedCaseStudies(): Promise<CaseStudy[]> {
 export async function getCaseStudyBySlug(
   slug: string
 ): Promise<CaseStudy | null> {
+  if (!isPublicCaseStudySlug(slug)) {
+    return null;
+  }
   const fromCms = await sanityClient.fetch(
     groq`*[_type == "caseStudy" && (showOnWebsite == true || isPublished == true) && slug.current == $slug][0]${caseStudyProjection}`,
     { slug }

@@ -14,40 +14,40 @@ export default function OfferHeader({
   productName,
   primaryCta,
 }: Props) {
+  const cta = {
+    ...primaryCta,
+    label: offer.ctaLabel?.trim() || "Start a conversation",
+    href: primaryCta.href || "/start-a-project",
+  };
+
+  const summary =
+    offer.summary?.trim() ||
+    "A structured investigation into how customers discover, evaluate, and interact with your organisation.";
+
   return (
-    <Section variant="default" className="pt-20 md:pt-28">
-      <p className="studio-eyebrow">Flagship offer · Step 01 Diagnose</p>
-      <h1 className="studio-headline mt-4">{offer.title || productName}</h1>
-      <p className="mt-6 text-lg leading-relaxed text-cd-shade">
-        {offer.summary}
+    <Section variant="default" className="pt-20 pb-10 md:pt-28 md:pb-12">
+      <h1 className="studio-headline max-w-3xl">{offer.title || productName}</h1>
+      <p className="mt-6 max-w-2xl text-xl font-semibold leading-snug text-cd-txt">
+        Find where your customer journey breaks before you spend money fixing it.
       </p>
-      <div className="mt-8 flex flex-wrap items-end gap-8">
-        {offer.priceLabel && (
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-wide text-cd-shade">
-              Investment
-            </p>
-            <p className="mt-1 font-display text-3xl font-bold text-cd-cta">
-              {offer.priceLabel}
-            </p>
-            {offer.priceNote && (
-              <p className="mt-2 text-sm text-cd-shade">{offer.priceNote}</p>
-            )}
-          </div>
-        )}
+      <p className="mt-4 max-w-2xl text-sm leading-relaxed text-cd-shade md:text-base">
+        {summary}
+      </p>
+      <ul className="mt-6 flex flex-wrap gap-2 font-mono text-[10px] uppercase tracking-wide text-cd-shade">
         {offer.turnaround && (
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-wide text-cd-shade">
-              Turnaround
-            </p>
-            <p className="mt-1 text-lg font-semibold text-cd-txt">
-              {offer.turnaround}
-            </p>
-          </div>
+          <li className="rounded-full border border-cd-border px-3 py-1.5">
+            {offer.turnaround}
+          </li>
         )}
-      </div>
+        <li className="rounded-full border border-cd-border px-3 py-1.5">
+          Scoped investigation
+        </li>
+        <li className="rounded-full border border-cd-border px-3 py-1.5">
+          90-minute walkthrough
+        </li>
+      </ul>
       <div className="mt-8">
-        <PrimaryCta cta={primaryCta} />
+        <PrimaryCta cta={cta} variant="solid" />
       </div>
     </Section>
   );

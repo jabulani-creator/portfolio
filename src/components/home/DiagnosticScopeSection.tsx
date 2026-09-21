@@ -22,15 +22,9 @@ export default function DiagnosticScopeSection({
         The Diagnostic Scope
       </h2>
       <p className="studio-body mt-4 max-w-2xl">
-        Eight fixed-scope audits delivered in about one week — plus a live
-        walkthrough call.
-        {priceLabel ? (
-          <>
-            {" "}
-            Investment:{" "}
-            <span className="font-semibold text-cd-txt">{priceLabel}</span>.
-          </>
-        ) : null}
+        Structured audits delivered in about one week when that scope is agreed —
+        plus a live walkthrough call. Investment is quoted after an initial
+        conversation.
       </p>
       <div className="mt-12 grid divide-x divide-y divide-cd-border border border-cd-border sm:grid-cols-2">
         {sorted.map((item) => (

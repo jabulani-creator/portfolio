@@ -27,7 +27,7 @@ export default function SiteFooter({
       <div className="mx-auto w-11/12 max-w-6xl">
         <div className="flex flex-col items-center gap-8 text-center md:flex-row md:justify-between md:text-left">
           <p className="font-mono text-xs text-cd-shade">
-            // Built by a developer, for businesses that want to convert.
+            // Built for organisations that need clarity before they build.
           </p>
           <div className="flex flex-wrap justify-center gap-6 text-xs text-cd-shade">
             {contact.phone && <span>{contact.phone}</span>}

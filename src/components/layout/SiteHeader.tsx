@@ -16,11 +16,11 @@ type Props = {
 };
 
 const defaultNav = [
-  { label: "Work", href: "/case-studies", order: 1 },
+  { label: "Case Studies", href: "/case-studies", order: 1 },
   { label: "Diagnostics", href: "/digital-experience-diagnostic", order: 2 },
   { label: "How I Work", href: "/how-i-work", order: 3 },
   { label: "About", href: "/about", order: 4 },
-  { label: "Contact", href: "/start-here", order: 5 },
+  { label: "Contact", href: "/start-a-project", order: 5 },
 ];
 
 export default function SiteHeader({
@@ -72,8 +72,9 @@ export default function SiteHeader({
           href="/"
           className={logoClass}
           onClick={() => setOpen(false)}
+          title="Jabulani — websites, digital systems & automation"
         >
-          {overlay && !overlaySolid ? "← Home" : "~/the-website-guy"}
+          {overlay && !overlaySolid ? "← Home" : "Jabulani"}
         </Link>
 
         <nav className="hidden items-center gap-6 md:flex lg:gap-8">
@@ -83,7 +84,7 @@ export default function SiteHeader({
             </Link>
           ))}
           <Link href={primaryCta.href} className={ctaClass}>
-            Book a Diagnostic
+            {primaryCta.label}
           </Link>
         </nav>
 
@@ -117,7 +118,7 @@ export default function SiteHeader({
                 className={`inline-flex ${ctaClass}`}
                 onClick={() => setOpen(false)}
               >
-                Book a Diagnostic
+                {primaryCta.label}
               </Link>
             </li>
           </ul>

@@ -4,11 +4,12 @@ import Section from "@/components/ui/Section";
 const fixes = [
   "Website",
   "Landing page",
-  "Booking system",
-  "Digital workflow",
-  "Content architecture",
-  "Conversion optimization",
-  "Full digital platform",
+  "Booking flow",
+  "Enquiry workflow",
+  "Clearer pricing on site",
+  "Google & local listings",
+  "WhatsApp handoff",
+  "Custom platform",
 ];
 
 const notAlways = [
@@ -23,7 +24,7 @@ const notAlways = [
 export default function FixCanLookLikeSection() {
   return (
     <Section variant="light" className="section-rule border-y border-cd-border">
-      <p className="studio-eyebrow">After the diagnosis</p>
+      <p className="studio-eyebrow">After we understand the problem</p>
       <h2 className="mt-3 text-2xl font-bold tracking-tight md:text-3xl">
         What can the fix look like?
       </h2>
@@ -62,7 +63,7 @@ export default function FixCanLookLikeSection() {
           href="/digital-experience-diagnostic"
           className="mt-6 inline-block font-mono text-xs uppercase tracking-wide text-cd-shade underline-offset-4 hover:text-cd-txt hover:underline"
         >
-          About the diagnostic →
+          When a diagnostic helps →
         </Link>
       </div>
     </Section>

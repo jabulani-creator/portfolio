@@ -1,35 +1,47 @@
 import Section from "@/components/ui/Section";
 
 const steps = [
-  { name: "Diagnose", detail: "Understand the business and customer journey." },
-  { name: "Design", detail: "Translate findings into a better experience." },
-  { name: "Build", detail: "Develop the digital system that fixes it." },
-  { name: "Improve", detail: "Measure and iterate — including Ongoing Care." },
+  {
+    name: "Investigate",
+    detail:
+      "Review the customer journey, digital touchpoints, competitors, reviews, and available evidence.",
+  },
+  {
+    name: "Diagnose",
+    detail:
+      "Identify where the experience breaks and which problems matter most.",
+  },
+  {
+    name: "Decide",
+    detail:
+      "Turn findings into a prioritized plan — including whether you need a website, system, process change, automation, or something else.",
+  },
 ];
 
 export default function OfferMethodologySection() {
   return (
-    <Section variant="dark">
-      <p className="studio-eyebrow text-white/50">Methodology</p>
-      <h2 className="mt-3 font-display text-3xl font-bold">
-        Diagnose → Design → Build → Improve
+    <Section variant="default" className="section-rule">
+      <p className="studio-eyebrow">The process</p>
+      <h2 className="mt-3 font-display text-2xl font-bold tracking-tight text-cd-txt md:text-3xl">
+        Investigate → Diagnose → Decide
       </h2>
-      <p className="mt-4 max-w-2xl text-white/70">
-        This page sells step one — the productized Digital Experience
-        Diagnostic. Build and improve follow only when the evidence supports
-        them.
+      <p className="mt-4 max-w-2xl text-sm leading-relaxed text-cd-shade md:text-base">
+        The diagnostic doesn&apos;t automatically lead to a website. It leads to a
+        decision — backed by evidence.
       </p>
-      <ul className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+      <ol className="mt-10 grid gap-6 md:grid-cols-3">
         {steps.map((step, i) => (
-          <li key={step.name}>
-            <p className="font-display text-3xl font-bold text-white/20">
-              {String(i + 1).padStart(2, "0")}
+          <li key={step.name} className="studio-card">
+            <p className="mono-index">[ {String(i + 1).padStart(2, "0")} ]</p>
+            <p className="mt-3 font-display text-lg font-bold text-cd-txt">
+              {step.name}
             </p>
-            <p className="mt-2 font-display text-lg font-bold">{step.name}</p>
-            <p className="mt-2 text-sm text-white/65">{step.detail}</p>
+            <p className="mt-3 text-sm leading-relaxed text-cd-shade">
+              {step.detail}
+            </p>
           </li>
         ))}
-      </ul>
+      </ol>
     </Section>
   );
 }

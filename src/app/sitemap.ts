@@ -10,7 +10,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/case-studies",
     "/how-i-work",
     "/about",
-    "/start-here",
+    "/start-a-project",
     "/ongoing-care",
   ];
 
@@ -18,6 +18,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     url: `${BASE_URL}${route}`,
     lastModified: new Date(),
     changeFrequency: route === "" ? "weekly" : "monthly",
-    priority: route === "" ? 1 : route === "/start-here" ? 0.9 : 0.8,
+    priority: route === "" ? 1 : route === "/start-a-project" ? 0.9 : 0.8,
   }));
 }

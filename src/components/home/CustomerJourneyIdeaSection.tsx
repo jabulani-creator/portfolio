@@ -1,15 +1,20 @@
 import Section from "@/components/ui/Section";
 
-const stages = ["Discover", "Evaluate", "Contact", "Convert"];
+const stages = ["Discover", "Understand", "Act", "Return"];
 
 export default function CustomerJourneyIdeaSection() {
   return (
-    <Section variant="light" className="section-rule border-y border-cd-border">
-      <p className="studio-eyebrow">The idea</p>
+    <Section variant="default" className="section-rule">
+      <p className="studio-eyebrow">Philosophy</p>
       <h2 className="mt-3 text-2xl font-bold tracking-tight md:text-3xl">
         Don&apos;t start with the website.
       </h2>
       <p className="mt-3 text-lg font-medium text-cd-txt">Start with the customer.</p>
+      <p className="mt-4 max-w-2xl text-sm leading-relaxed text-cd-shade md:text-base">
+        Before building anything, I look at how people discover you, what they
+        see, what they understand, where they hesitate, and what happens when
+        they want to take action.
+      </p>
       <div className="mt-10 flex flex-wrap items-center gap-3 font-mono text-xs uppercase tracking-wide text-cd-shade md:gap-4 md:text-sm">
         {stages.map((stage, i) => (
           <span key={stage} className="flex items-center gap-3 md:gap-4">
@@ -24,9 +29,6 @@ export default function CustomerJourneyIdeaSection() {
           </span>
         ))}
       </div>
-      <p className="mt-8 max-w-lg text-sm leading-relaxed text-cd-shade md:text-base">
-        I find where that journey breaks.
-      </p>
     </Section>
   );
 }

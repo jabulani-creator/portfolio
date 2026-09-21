@@ -4,13 +4,11 @@ import { PrimaryCta as PrimaryCtaType } from "../../../types/SiteSettings";
 
 type Props = {
   primaryCta: PrimaryCtaType;
-  priceLabel?: string;
   turnaround?: string;
 };
 
 export default function FinalDiagnosticCta({
   primaryCta,
-  priceLabel,
   turnaround = "~1 week",
 }: Props) {
   return (
@@ -20,10 +18,9 @@ export default function FinalDiagnosticCta({
           Ready to find where your customers get stuck?
         </h2>
         <p className="mx-auto mt-4 max-w-lg text-sm text-white/70">
-          Get a structured digital diagnosis of your customer journey, website, and
-          digital presence.
-          {turnaround ? ` Delivered in ${turnaround}.` : ""}
-          {priceLabel ? ` Investment ${priceLabel}.` : ""}
+          Start with a conversation. I&apos;ll recommend the right scope and
+          provide a clear quotation before any work begins.
+          {turnaround ? ` Typical diagnostic delivery: ${turnaround} once scope is agreed.` : ""}
         </p>
         <div className="mt-8 flex justify-center">
           <PrimaryCta cta={primaryCta} variant="inverse" />

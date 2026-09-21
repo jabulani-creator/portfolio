@@ -66,7 +66,10 @@ async function main() {
   }
 
   console.log(
-    "\nDone. Open http://localhost:3000/admin → Case Study → add images → Publish."
+    "\nDone. Emmasdale: open /admin → Case Study → Emmasdale → add hero, What I built screenshots, optional card images → Publish."
+  );
+  console.log(
+    "  Manual only: heroImage, whatBuilt[].image, storyThreads[].cardImage, proofMedia[], seoTitle/seoDescription, quote attribution."
   );
 }
 

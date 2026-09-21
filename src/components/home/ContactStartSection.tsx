@@ -8,10 +8,10 @@ type Props = {
 };
 
 const intents = [
-  { label: "I want a digital diagnostic", href: "/start-here" },
-  { label: "I have a business problem", href: "/start-here" },
-  { label: "I need custom software", href: "/start-here" },
-  { label: "I have an idea", href: "/start-here" },
+  { label: "I want a digital diagnostic", href: "/digital-experience-diagnostic" },
+  { label: "I have a business problem", href: "/start-a-project#explore-diagnostic" },
+  { label: "I need custom software", href: "/start-a-project#start-project" },
+  { label: "I have an idea", href: "/start-a-project#contact" },
 ];
 
 export default function ContactStartSection({ primaryCta }: Props) {

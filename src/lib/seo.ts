@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-const SITE_NAME = "The Website Guy";
+const SITE_NAME = "Jabulani";
 
 type PageMetadataInput = {
   title: string;

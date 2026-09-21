@@ -10,16 +10,16 @@ export default function FullDiagnosticArchive({ children }: Props) {
     <Section variant="light" id="cs-full-diagnostic" className="section-rule border-t border-cd-border">
       <details className="group">
         <summary className="cursor-pointer list-none">
-          <p className="studio-eyebrow">Level 2</p>
+          <p className="studio-eyebrow">Behind the build</p>
           <h2 className="mt-3 text-2xl font-bold tracking-tight md:text-3xl">
-            View full diagnostic
+            Want to see how the decisions were made?
           </h2>
           <p className="mt-3 max-w-xl text-sm text-cd-shade">
-            Reconnaissance, evidence, problem→solution maps, and implementation
-            detail — for readers who want how you know, not just what you found.
+            Full investigation — context, journeys, evidence, diagnosis, and
+            implementation detail for readers who want the forensic version.
           </p>
           <span className="mt-4 inline-block font-mono text-xs uppercase tracking-wide text-cd-txt underline-offset-4 group-open:hidden">
-            Expand full diagnostic ↓
+            View full investigation ↓
           </span>
           <span className="mt-4 hidden font-mono text-xs uppercase tracking-wide text-cd-shade group-open:inline-block">
             Collapse ↑

@@ -24,7 +24,19 @@ export type OutcomeShiftRow = {
   after: string;
 };
 
+/** Level 1 — 60–90 second business case before the deep story. */
+export type CaseStudyExecutiveSummary = {
+  title: string;
+  situation: string;
+  problem: string;
+  investigated: string[];
+  built: { heading: string; bullets: string[] }[];
+  result: string;
+  roleLine: string;
+};
+
 export type CaseStudyStoryLayer = {
+  executiveSummary?: CaseStudyExecutiveSummary;
   heroHook?: string;
   businessInsight?: string;
   revenueEngines?: RevenueEngine[];
@@ -46,89 +58,45 @@ export type CaseStudyStoryLayer = {
   roleSteps?: string;
 };
 
-const crossParkStory: CaseStudyStoryLayer = {
-  heroHook:
-    "A destination people can discover — but struggle to buy from.",
-  businessInsight:
-    "Cross Park isn't selling one thing. Its digital experience has to move three completely different customers toward three different decisions.",
-  revenueEngines: [
-    { label: "Day visits", detail: "High volume" },
-    { label: "Accommodation", detail: "Higher ticket" },
-    { label: "Events", detail: "High value" },
-  ],
-  audiencePersonas: [
-    {
-      label: "Family",
-      question: "How much is it to spend the day?",
-      needs: ["Pricing", "Activities", "Directions", "Rules"],
-    },
-    {
-      label: "Overnight guest",
-      question: "Is this worth staying at?",
-      needs: ["Chalets", "Amenities", "Rates", "Availability"],
-    },
-    {
-      label: "Corporate planner",
-      question: "Can this venue handle our event?",
-      needs: ["Capacity", "Packages", "Dates", "Quote"],
-    },
-  ],
-  audienceFootnote: "One website. Three buying journeys.",
-  journeySteps: [
-    { label: "Discover", status: "ok", note: "Social visibility" },
-    { label: "Understand", status: "warn", note: "Information fragmented" },
-    { label: "Compare", status: "critical", note: "Pricing difficult to find" },
-    { label: "Enquire", status: "critical", note: "No structured event enquiry" },
-    { label: "Book", status: "warn", note: "Manual WhatsApp process" },
-  ],
-  journeyFootnote:
-    "Two critical breakpoints block high-intent visitors before they ever book.",
-  fixLayers: [
-    "Content",
-    "Information architecture",
-    "Pricing transparency",
-    "Booking workflow",
-    "Corporate lead capture",
-    "WhatsApp conversion",
-  ],
-  fixFootnote: "Not just a website — a system of clarity and conversion.",
-  recommendationHeadline: "A dedicated digital front door for Cross Park.",
-  blueprintMonospace: `                 CROSS PARK
-                     │
-       ┌─────────────┼─────────────┐
-       ↓             ↓             ↓
-   DAY VISITS   ACCOMMODATION    EVENTS
-       │             │             │
-   Activities      Chalets       Venues
-   Pricing         Rates         Packages
-   Rules           Gallery       Enquiries
-       │             │             │
-       └─────────────┼─────────────┘
-                     ↓
-               BOOK / ENQUIRE`,
-  outcomeRows: [
-    { before: "Hidden pricing", after: "Transparent packages" },
-    { before: "Generic corporate site", after: "Dedicated Cross Park experience" },
-    { before: "One audience", after: "Segmented journeys" },
-    {
-      before: "WhatsApp for basic questions",
-      after: "Site handles basic information",
-    },
-    {
-      before: "Unstructured event enquiries",
-      after: "Qualified event leads",
-    },
-  ],
-  impactTarget: {
-    label: "90-day conversion objective",
-    value: "20–30 → 60+ qualified enquiries / week",
-    isProjection: true,
-  },
-  roleTitles: "Digital Experience Consultant · Product Strategist · Developer",
-  roleSteps: "Investigated → Diagnosed → Architected → Designed → Built",
-};
-
 const emmasdaleStory: CaseStudyStoryLayer = {
+  executiveSummary: {
+    title: "From scattered communication to a church digital platform",
+    situation:
+      "Emmasdale SDA had an active congregation, strong communication channels, and many digital touchpoints — but information, member care, and administration were spread across Facebook, WhatsApp groups, paper forms, personal phones, and the church office.",
+    problem:
+      "The church did not only need a better website. It needed one digital centre connecting the public, members, and church leadership.",
+    investigated: [
+      "How visitors find and understand the church",
+      "How members access weekly information and spiritual resources",
+      "How prayer and care requests reach leaders",
+      "How departments submit reports and information",
+      "Where WhatsApp, paper, and office-based processes created friction",
+    ],
+    built: [
+      {
+        heading: "Public website",
+        bullets: [
+          "Services, ministries, events, sermons, articles, bulletin, Sabbath School, Daily with God, prayer, care, and visitor information",
+        ],
+      },
+      {
+        heading: "Member experiences",
+        bullets: [
+          "Digital bulletin, prayer wall, devotional content, resources, and church information",
+        ],
+      },
+      {
+        heading: "Leadership platform",
+        bullets: [
+          "Role-based dashboard, digital forms, quarterly reports, care inbox, scheduling, document requests, and ministry administration",
+        ],
+      },
+    ],
+    result:
+      "Visitors, members, and leaders connect through one system — public information, member participation, and operational workflows on a mobile-friendly platform.",
+    roleLine:
+      "Strategy · UX · Architecture · Full-stack development — investigated, designed, built, and shipped.",
+  },
   heroHook:
     "A church with information everywhere — but no digital centre.",
   businessInsight:
@@ -266,13 +234,58 @@ const nikwisaStory: CaseStudyStoryLayer = {
 };
 
 const STORY_BY_SLUG: Record<string, CaseStudyStoryLayer> = {
-  "cross-park": crossParkStory,
   "emmasdale-sda-church": emmasdaleStory,
   nikwisa: nikwisaStory,
 };
 
 export function getCaseStudyStoryLayer(slug: string): CaseStudyStoryLayer {
   return STORY_BY_SLUG[slug] ?? {};
+}
+
+import type { CaseStudyDeepDive } from "../../../types/CaseStudyV2";
+
+export function deepDiveToStoryLayer(
+  deepDive: CaseStudyDeepDive
+): CaseStudyStoryLayer {
+  return {
+    executiveSummary: deepDive.executiveSummary
+      ? {
+          title: deepDive.executiveSummary.title ?? "",
+          situation: deepDive.executiveSummary.situation ?? "",
+          problem: deepDive.executiveSummary.problem ?? "",
+          investigated: deepDive.executiveSummary.investigated ?? [],
+          built: (deepDive.executiveSummary.built ?? []).map((b) => ({
+            heading: b.heading ?? "",
+            bullets: b.bullets ?? [],
+          })),
+          result: deepDive.executiveSummary.result ?? "",
+          roleLine: deepDive.executiveSummary.roleLine ?? "",
+        }
+      : undefined,
+    audiencePersonas: deepDive.audiencePersonas
+      ?.filter((p) => p.label)
+      .map((p) => ({
+        label: p.label!,
+        question: p.question ?? "",
+        needs: p.needs ?? [],
+      })),
+    journeySteps: deepDive.journeySteps
+      ?.filter((s) => s.label)
+      .map((s) => ({
+        label: s.label!,
+        status: s.status,
+        note: s.note,
+      })),
+    revenueEngines: deepDive.revenueEngines
+      ?.filter((e) => e.label)
+      .map((e) => ({ label: e.label!, detail: e.detail })),
+    fixLayers: deepDive.fixLayers,
+    recommendationHeadline: deepDive.recommendationHeadline,
+    blueprintMonospace: deepDive.blueprintMonospace,
+    outcomeRows: deepDive.outcomeRows
+      ?.filter((r) => r.before && r.after)
+      .map((r) => ({ before: r.before!, after: r.after! })),
+  };
 }
 
 export function buildStoryLayerFromCaseStudy(

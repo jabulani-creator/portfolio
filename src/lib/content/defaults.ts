@@ -16,20 +16,20 @@ import {
 export function getDefaultSiteShell(): SiteSettings {
   return {
     _id: "default",
-    siteTitle: "The Website Guy",
+    siteTitle: "Jabulani",
     categoryHeadline:
-      "I investigate why your digital presence isn't working, then build the fix.",
+      "Get found. Get understood. Serve customers better — through websites, digital systems, and automation.",
     homepageVariant: "diagnostic",
     navigation: [
-      { label: "Work", href: "/case-studies", order: 1 },
+      { label: "Case Studies", href: "/case-studies", order: 1 },
       { label: "Diagnostics", href: "/digital-experience-diagnostic", order: 2 },
       { label: "How I Work", href: "/how-i-work", order: 3 },
       { label: "About", href: "/about", order: 4 },
-      { label: "Contact", href: "/start-here", order: 5 },
+      { label: "Contact", href: "/start-a-project", order: 5 },
     ],
     primaryCta: {
-      label: "Book a Digital Experience Diagnostic",
-      href: "/start-here",
+      label: "Start a Project",
+      href: "/start-a-project",
     },
     contact: {
       email: "charinga@gmail.com",
@@ -42,9 +42,9 @@ export function getDefaultSiteShell(): SiteSettings {
       "Based in Lusaka — working with Zambian lodges, churches, schools, and SMEs.",
     operatingSince: "2019",
     seoDefaults: {
-      title: "The Website Guy — Digital Experience Consultant",
+      title: "Jabulani — Websites, Digital Systems & Automation",
       description:
-        "Digital experience consulting, business diagnostics, and builds for SMEs in Zambia — web development Zambia, digital strategy, software development.",
+        "Help for Zambian businesses and organisations to get found, understood, and served better — customer journey diagnostics, websites, platforms, and automation.",
     },
   };
 }
@@ -59,27 +59,28 @@ export function getDefaultOffer(): Offer {
     title: "Digital Experience Diagnostic",
     slug: "digital-experience-diagnostic",
     summary:
-      "A fixed-scope investigation into why your digital presence is not converting — delivered in about one week with a live walkthrough call.",
+      "A structured investigation into how customers discover, evaluate, and interact with your organisation — and where that experience is breaking down.",
     turnaround: "~1 week",
+    /** Internal / CMS reference — not shown on public pages */
     priceLabel: "K12,000 – K18,000",
-    priceNote: "Fixed scope · 8 deliverables + 90-minute walkthrough call",
+    priceNote: "Scoped after discovery · deliverables + walkthrough call",
     walkthroughCallDescription:
-      "A 90-minute live walkthrough — not just a PDF dropped in your inbox.",
+      "We walk through the findings together — not a PDF dropped into your inbox.",
     processSummary:
-      "Investigate the customer journey, gather evidence, rank what to fix first, then decide whether a build is even necessary.",
-    ctaLabel: "Book a Digital Experience Diagnostic",
+      "Investigate the customer journey and evidence, diagnose where experience breaks, decide what to fix first — then scope any build from findings.",
+    ctaLabel: "Start a conversation",
     faq: [
       {
         order: 1,
         question: "Isn't this just a free website audit?",
         answer:
-          "No. A generic audit lists technical issues. This diagnostic maps your customer journey, reviews, competitors, and revenue leaks — then ranks what to fix first. You get eight named deliverables and a live walkthrough, not a checklist PDF.",
+          "No. A generic audit lists technical issues. This is a structured investigation across the customer journey — discovery, clarity, local visibility, reviews, competitive experience, and commercial friction — with eight named outputs and a live walkthrough, not a checklist PDF.",
       },
       {
         order: 2,
-        question: "What if I actually just need a new website?",
+        question: "What if I already know I need a new website?",
         answer:
-          "Sometimes a build is the right answer — but only after we see where customers drop off. The diagnostic tells you whether you need a new site, better pricing clarity, listings work, or something else entirely.",
+          "That's fine. You don't necessarily need a standalone diagnostic. If the project is already well understood, we can scope the build directly on the Start a Project page. The diagnostic is most useful when the problem is unclear, the existing experience needs investigation, or you're unsure what solution you actually need.",
       },
       {
         order: 3,
@@ -91,54 +92,56 @@ export function getDefaultOffer(): Offer {
         order: 4,
         question: "What happens after the diagnostic?",
         answer:
-          "You keep the full report and walkthrough. If a build is warranted, we scope it from the evidence — not from guesswork. If not, you still have a prioritized plan. Ongoing Care is optional after build work.",
+          "You keep the full findings and walkthrough. Recommendations may include website changes, process fixes, visibility work, automation, a new system, or no build yet. If a build is warranted, we scope it from the evidence. Ongoing support is optional after launch.",
       },
     ],
     deliverables: [
       {
         order: 1,
-        title: "Customer Journey Audit",
+        title: "Customer Journey Map",
         description:
-          "How a prospect discovers, evaluates, and contacts your business today.",
+          "Where customers discover you, what they encounter, what they need to understand, and where they can take action.",
       },
       {
         order: 2,
-        title: "Website Audit",
+        title: "Website & Experience Audit",
         description:
-          "Mobile speed, message clarity, CTA visibility, and whether pricing or key info is easy to find.",
+          "Mobile experience, message clarity, calls to action, speed, and whether key information is easy to find.",
       },
       {
         order: 3,
-        title: "Google Business Profile Audit",
+        title: "Local Search / Google Business Profile Audit",
         description:
-          "Accuracy, completeness, and consistency across your listings.",
+          "Accuracy, completeness, and consistency across your listings and local discovery touchpoints.",
       },
       {
         order: 4,
-        title: "Review Analysis",
+        title: "Customer Review Analysis",
         description:
-          "Patterns across Google, Facebook, and TripAdvisor — what customers say and what goes unaddressed.",
+          "Patterns across relevant review platforms — what customers repeat and what goes unaddressed.",
       },
       {
         order: 5,
-        title: "Competitor Comparison",
-        description: "Who your customer picks instead, and why.",
+        title: "Competitive Experience Comparison",
+        description:
+          "How competing organisations present themselves, what they make easy, and likely decision factors — from public evidence, not assumed customer choices.",
       },
       {
         order: 6,
-        title: "Top Revenue Leaks",
+        title: "Commercial Friction Analysis",
         description:
-          "Specific, evidenced friction points costing you money — ranked.",
+          "Specific, evidenced friction points that may be costing you enquiries, bookings, or sales — ranked by impact.",
       },
       {
         order: 7,
         title: "Prioritized Action Plan",
-        description: "Ranked by leverage — not a wishlist.",
+        description: "What should be fixed first — and what can wait.",
       },
       {
         order: 8,
-        title: "90-Minute Walkthrough Call",
-        description: "Delivered live so you can ask questions — not just emailed.",
+        title: "90-Minute Strategy Walkthrough",
+        description:
+          "Delivered live so you can ask questions and decide next steps — not only emailed.",
       },
     ],
   };

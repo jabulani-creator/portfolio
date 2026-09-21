@@ -92,7 +92,7 @@ export default async function CaseStudiesPage() {
               diagnostic or read how the methodology works on the home page.
             </p>
             <Link
-              href="/start-here"
+              href="/start-a-project"
               className="mt-6 inline-block text-sm font-semibold text-cd-cta hover:underline"
             >
               Start here →

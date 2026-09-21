@@ -1,16 +1,16 @@
 import type { Metadata } from "next";
 import { getHomePageContent } from "@/lib/content/queries/home";
-import { getDefaultOffer, getDefaultSiteShell } from "@/lib/content/defaults";
+import { getDefaultSiteShell } from "@/lib/content/defaults";
 import { buildPageMetadata } from "@/lib/seo";
 import EditorialHeroSection from "@/components/home/EditorialHeroSection";
-import CustomerJourneyIdeaSection from "@/components/home/CustomerJourneyIdeaSection";
+import HomeWhatIBuildSection from "@/components/home/HomeWhatIBuildSection";
+import HomePhilosophySection from "@/components/home/HomePhilosophySection";
+import HomeMethodSection from "@/components/home/HomeMethodSection";
+import HomeProblemStoriesSection from "@/components/home/HomeProblemStoriesSection";
 import InvestigatedBusinessesSection from "@/components/home/InvestigatedBusinessesSection";
-import DiagnosticLeaksPreviewSection from "@/components/home/DiagnosticLeaksPreviewSection";
-import VisualMethodPipelineSection from "@/components/home/VisualMethodPipelineSection";
-import FixCanLookLikeSection from "@/components/home/FixCanLookLikeSection";
 import MirrorPainSection from "@/components/home/MirrorPainSection";
 import HomeAboutTeaser from "@/components/home/HomeAboutTeaser";
-import FinalDiagnosticCta from "@/components/home/FinalDiagnosticCta";
+import HomeFinalCtaSection from "@/components/home/HomeFinalCtaSection";
 
 export async function generateMetadata(): Promise<Metadata> {
   const { siteSettings } = await getHomePageContent();
@@ -19,35 +19,32 @@ export async function generateMetadata(): Promise<Metadata> {
     title: "Home",
     description:
       shell.categoryHeadline ??
-      "Find where your customers get stuck — then build what fixes it.",
+      "Websites, digital systems, and automation for organisations in Zambia.",
   });
 }
 
 export default async function Home() {
-  const { siteSettings, offer, caseStudies } = await getHomePageContent();
+  const { siteSettings, caseStudies } = await getHomePageContent();
   const shell = siteSettings ?? getDefaultSiteShell();
-  const offerData = offer ?? getDefaultOffer();
-
   const primaryCta = shell.primaryCta ?? {
-    label: "Book a Digital Experience Diagnostic",
-    href: "/start-here",
+    label: "Start a Project",
+    href: "/start-a-project",
   };
 
   return (
     <>
-      <EditorialHeroSection primaryCta={primaryCta} />
-      <CustomerJourneyIdeaSection />
+      <EditorialHeroSection
+        primaryCta={primaryCta}
+        localTrustLine={shell.localTrustLine}
+      />
+      <HomeWhatIBuildSection />
+      <HomePhilosophySection primaryCta={primaryCta} />
+      <HomeMethodSection />
       <InvestigatedBusinessesSection caseStudies={caseStudies} />
-      <DiagnosticLeaksPreviewSection />
-      <VisualMethodPipelineSection />
-      <FixCanLookLikeSection />
+      <HomeProblemStoriesSection caseStudies={caseStudies} />
       <MirrorPainSection />
       <HomeAboutTeaser />
-      <FinalDiagnosticCta
-        primaryCta={primaryCta}
-        priceLabel={offerData.priceLabel}
-        turnaround={offerData.turnaround}
-      />
+      <HomeFinalCtaSection primaryCta={primaryCta} contact={shell.contact} />
     </>
   );
 }
