@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 
 const BASE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://thewebsiteguy.zm";
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://jabulani.digital";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const routes = [

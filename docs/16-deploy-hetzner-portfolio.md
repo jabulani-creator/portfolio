@@ -146,7 +146,7 @@ pm2 save
 
 ## 8. Optional: domain + Nginx later
 
-When `thewebsiteguy.zm` points at `167.233.68.200`, proxy port 80/443 to `127.0.0.1:3003`, set `NEXT_PUBLIC_SITE_URL=https://thewebsiteguy.zm`, rebuild, and add HTTPS CORS in Sanity.
+When **`jabulani.digital`** points at `167.233.68.200`, proxy port 80/443 to `127.0.0.1:3003`, set `NEXT_PUBLIC_SITE_URL=https://jabulani.digital`, rebuild, and add HTTPS CORS in Sanity.
 
 ---
 
