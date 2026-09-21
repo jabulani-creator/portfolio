@@ -53,15 +53,22 @@ async function main() {
     useCdn: false,
   });
 
-  const documents = [
-    buildEmmasdaleCaseStudyDocument({ isPublished: publish }),
-    buildNikwisaCaseStudyDocument({ isPublished: publish }),
+  type CaseStudySeedDocument = {
+    _id: string;
+    _type: "caseStudy";
+    isPublished?: boolean;
+    [key: string]: unknown;
+  };
+
+  const documents: CaseStudySeedDocument[] = [
+    buildEmmasdaleCaseStudyDocument({ isPublished: publish }) as CaseStudySeedDocument,
+    buildNikwisaCaseStudyDocument({ isPublished: publish }) as CaseStudySeedDocument,
   ];
 
   for (const doc of documents) {
     const result = await client.createOrReplace(doc);
     console.log(
-      `Upserted ${result._type} ${result._id} (published: ${(doc as { isPublished?: boolean }).isPublished ?? false})`
+      `Upserted ${result._type} ${result._id} (published: ${doc.isPublished ?? false})`
     );
   }
 
