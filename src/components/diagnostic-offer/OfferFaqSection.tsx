@@ -15,7 +15,7 @@ export default function OfferFaqSection({ faq }: Props) {
   }
 
   return (
-    <Section variant="light">
+    <Section variant="light" id="faq">
       <p className="studio-eyebrow">FAQ</p>
       <h2 className="mt-3 font-display text-3xl font-bold text-cd-txt">
         Common questions

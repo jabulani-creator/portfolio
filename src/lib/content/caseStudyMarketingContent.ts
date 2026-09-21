@@ -6,7 +6,7 @@ export const CASE_STUDY_MARKETING_FALLBACK: Record<
     heroSubtitle: "From scattered communication to one digital centre.",
     roleLine: "Church digital platform · Strategy · UX · Full-stack development",
     heroContext:
-      "Emmasdale SDA needed more than a new website. Information, member communication, and administration were spread across WhatsApp, Facebook, paper, and the church office.",
+      "Emmasdale SDA needed a church digital platform in Lusaka, not another brochure site. Information, member communication, and administration were spread across WhatsApp, Facebook, paper, and the church office.",
     builtPills: ["Public website", "Member experiences", "Leadership platform"],
     problemTitle: "Information was everywhere — but there was no digital centre.",
     problemChannels: [
@@ -75,7 +75,7 @@ export const CASE_STUDY_MARKETING_FALLBACK: Record<
     heroSubtitle: "From directory to decide-and-act platform.",
     roleLine: "Discovery platform · Product strategy · UX · Development",
     heroContext:
-      "Nikwisa needed more than listings. Users had to compare real options, trust the data, and reach businesses — not scroll another vague directory.",
+      "Nikwisa needed a local discovery platform for Zambia, not another vague directory. Users had to compare real options, trust the data, and reach businesses.",
     builtPills: ["Explore hubs", "Structured place pages", "WhatsApp enquiry"],
     problemTitle: "Discovery was shallow — compare and enquire paths were weak.",
     problemChannels: [

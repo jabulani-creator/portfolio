@@ -38,6 +38,15 @@ Second project: **`scripts/seed/case-studies/nikwisa.ts`** (and Emmasdale). Run 
 
 Adjust **price range** in Offer when you confirm real pricing — defaults use **K12,000 – K18,000** as a visible range until you change it.
 
+## SEO & social (after code deploy)
+
+See **[`docs/17-seo-portfolio-strategy.md`](./17-seo-portfolio-strategy.md)** for URL tiers, sitemap rules, and structured data.
+
+1. **Site Settings** — fill `seoDefaults` title + description (matches home hero).  
+2. Each **case study** — `seoTitle`, `seoDescription`, **hero image alt**, **What I built** screenshots (removes on-page placeholders).  
+3. **Brand assets** — favicons and `public/og-image.png` (1200×630) are the live defaults. Replace those files in place if you refresh the brand.  
+4. Re-scan **https://jabulani.digital** only (not `/admin`, not raw `:3003`).
+
 ---
 
 *The Website Guy · September 2026*

@@ -42,9 +42,9 @@ export function getDefaultSiteShell(): SiteSettings {
       "Based in Lusaka — working with Zambian lodges, churches, schools, and SMEs.",
     operatingSince: "2019",
     seoDefaults: {
-      title: "Jabulani — Websites, Digital Systems & Automation",
+      title: "Websites, Digital Systems & Automation in Lusaka — Jabulani",
       description:
-        "Help for Zambian businesses and organisations to get found, understood, and served better — customer journey diagnostics, websites, platforms, and automation.",
+        "Websites, digital systems, and automation for businesses and organisations in Lusaka, Zambia.",
     },
   };
 }
@@ -57,6 +57,9 @@ export function getDefaultOffer(): Offer {
   return {
     _id: "default",
     title: "Digital Experience Diagnostic",
+    seoTitle: "Website audit & customer journey review in Lusaka",
+    seoDescription:
+      "A digital experience diagnostic for organisations in Zambia — find where the customer journey breaks before you rebuild.",
     slug: "digital-experience-diagnostic",
     summary:
       "A structured investigation into how customers discover, evaluate, and interact with your organisation — and where that experience is breaking down.",

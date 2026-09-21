@@ -14,16 +14,21 @@ import OfferExampleFindingSection from "@/components/diagnostic-offer/OfferExamp
 import OfferWhatHappensNextSection from "@/components/diagnostic-offer/OfferWhatHappensNextSection";
 import OfferPricingSection from "@/components/diagnostic-offer/OfferPricingSection";
 import OfferFaqSection from "@/components/diagnostic-offer/OfferFaqSection";
+import FaqPageJsonLd from "@/components/seo/FaqPageJsonLd";
+import PageBreadcrumbs from "@/components/seo/PageBreadcrumbs";
 import { buildPageMetadata } from "@/lib/seo";
 
 export async function generateMetadata(): Promise<Metadata> {
   const offer = (await getOffer()) ?? getDefaultOffer();
   return buildPageMetadata({
-    title: offer.seoTitle ?? offer.title,
+    title:
+      offer.seoTitle?.trim() ||
+      "Website audit & customer journey review in Lusaka",
     description:
-      offer.seoDescription ??
-      offer.summary ??
-      "Structured investigation into how customers discover, evaluate, and interact with your organisation.",
+      offer.seoDescription?.trim() ||
+      offer.summary ||
+      "A digital experience diagnostic for organisations in Zambia — find where the customer journey breaks before you rebuild.",
+    path: "/digital-experience-diagnostic",
   });
 }
 
@@ -51,6 +56,18 @@ export default async function DigitalExperienceDiagnosticPage() {
 
   return (
     <>
+      <div className="mx-auto w-full max-w-6xl px-4 pt-6 md:px-6">
+        <PageBreadcrumbs
+          items={[
+            { name: "Home", path: "/" },
+            {
+              name: "Digital Experience Diagnostic",
+              path: "/digital-experience-diagnostic",
+            },
+          ]}
+        />
+      </div>
+      <FaqPageJsonLd faq={faqItems} />
       <OfferHeader
         offer={offerData}
         productName={productName}

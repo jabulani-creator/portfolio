@@ -148,6 +148,20 @@ pm2 save
 
 When **`jabulani.digital`** points at `167.233.68.200`, proxy port 80/443 to `127.0.0.1:3003`, set `NEXT_PUBLIC_SITE_URL=https://jabulani.digital`, rebuild, and add HTTPS CORS in Sanity.
 
+### Production URL gate (SEO)
+
+After Nginx + Certbot:
+
+```bash
+grep NEXT_PUBLIC_SITE_URL ~/apps/portfolio/Portfolio_Frontend/.env.production
+# Must be: NEXT_PUBLIC_SITE_URL=https://jabulani.digital
+cd ~/scripts && ./deploy_frontend.sh portfolio portfolio-frontend
+```
+
+Sanity → API → CORS: `https://jabulani.digital` (+ `www` if used), **Allow credentials** for Studio.
+
+Verify: `curl -sI https://jabulani.digital` → 200; `/robots.txt`, `/sitemap.xml`, `/llms.txt` reachable.
+
 ---
 
 ## Rules (same as multi-app runbook)

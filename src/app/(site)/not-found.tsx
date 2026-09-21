@@ -1,8 +1,16 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import Section from "@/components/ui/Section";
 import PrimaryCta from "@/components/layout/PrimaryCta";
 import { getSiteSettings } from "@/lib/content/queries/site";
 import { getDefaultSiteShell } from "@/lib/content/defaults";
+import { buildPageMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = buildPageMetadata({
+  title: "Page not found",
+  description: "That page does not exist on jabulani.digital.",
+  path: "/404",
+});
 
 export default async function NotFound() {
   const siteSettings = await getSiteSettings();

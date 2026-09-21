@@ -16,7 +16,7 @@ export const HOME_CASE_TEASERS: Record<string, HomeCaseTeaser> = {
       "Public website, member experiences, and leadership workflows in one platform.",
     selectedHeadline: "From scattered communication to one digital centre.",
     selectedBody:
-      "Public website, member experiences, and leadership workflows brought into one digital platform.",
+      "An SDA church website and digital platform in Lusaka — public site, member experiences, and leadership workflows in one place.",
     roleLine: "Strategy · UX · Full-stack development",
     headline: "Turning scattered church communication into a digital ecosystem.",
     badge: "PLATFORM",
@@ -26,7 +26,7 @@ export const HOME_CASE_TEASERS: Record<string, HomeCaseTeaser> = {
     cardLine: "Connecting people with places, activities, and businesses.",
     selectedHeadline: "Building discovery infrastructure for Zambia.",
     selectedBody:
-      "A platform connecting people with places, activities, and businesses — with clearer paths to enquiry.",
+      "A local discovery platform for Zambia — places, activities, and businesses, with clearer paths to enquire.",
     roleLine: "Product strategy · UX · Full-stack development",
     headline: "A destination business with untapped digital demand.",
     badge: "PLATFORM",

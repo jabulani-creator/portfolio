@@ -17,6 +17,7 @@ export const metadata: Metadata = buildPageMetadata({
   title: "About",
   description:
     "Investigation before build. Evidence-based implementation after diagnosis.",
+  path: "/about",
 });
 
 export default async function AboutPage() {

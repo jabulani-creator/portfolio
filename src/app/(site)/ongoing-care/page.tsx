@@ -13,6 +13,7 @@ export const metadata: Metadata = buildPageMetadata({
   title: "Ongoing Care",
   description:
     "Standing monthly upkeep after your diagnostic and build — content, SEO basics, and review monitoring.",
+  path: "/ongoing-care",
 });
 
 export default async function OngoingCarePage() {

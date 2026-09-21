@@ -1,15 +1,14 @@
 import type { MetadataRoute } from "next";
-
-const BASE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://jabulani.digital";
+import { getSiteUrl } from "@/lib/seo";
 
 export default function robots(): MetadataRoute.Robots {
+  const base = getSiteUrl();
   return {
     rules: {
       userAgent: "*",
       allow: "/",
       disallow: ["/admin", "/projects/"],
     },
-    sitemap: `${BASE_URL}/sitemap.xml`,
+    sitemap: `${base}/sitemap.xml`,
   };
 }

@@ -12,14 +12,30 @@ import MirrorPainSection from "@/components/home/MirrorPainSection";
 import HomeAboutTeaser from "@/components/home/HomeAboutTeaser";
 import HomeFinalCtaSection from "@/components/home/HomeFinalCtaSection";
 
+const HOME_TITLE =
+  "Websites, Digital Systems & Automation in Lusaka — Jabulani";
+
+const STALE_HOME_TITLES = new Set([
+  "Home",
+  "Jabulani — Websites, Digital Systems & Automation",
+  "Digital Experience Consultant",
+  "Get found. Get understood. Serve customers better",
+]);
+
 export async function generateMetadata(): Promise<Metadata> {
   const { siteSettings } = await getHomePageContent();
   const shell = siteSettings ?? getDefaultSiteShell();
+  const cmsTitle = shell.seoDefaults?.title?.trim();
+  const title =
+    cmsTitle && !STALE_HOME_TITLES.has(cmsTitle) ? cmsTitle : HOME_TITLE;
+
   return buildPageMetadata({
-    title: "Home",
+    title,
     description:
-      shell.categoryHeadline ??
-      "Websites, digital systems, and automation for organisations in Zambia.",
+      shell.seoDefaults?.description?.trim() ||
+      shell.categoryHeadline ||
+      "Websites, digital systems, and automation for businesses and organisations in Lusaka, Zambia.",
+    path: "/",
   });
 }
 

@@ -11,6 +11,7 @@ export const metadata: Metadata = buildPageMetadata({
   title: "Start a Project",
   description:
     "Start a project or explore the diagnostic — websites, platforms, and digital systems in Zambia.",
+  path: "/start-a-project",
 });
 
 export default async function StartAProjectPage() {

@@ -1,23 +1,33 @@
 import type { MetadataRoute } from "next";
+import { getCaseStudies } from "@/lib/content/queries/caseStudies";
+import { getSiteUrl } from "@/lib/seo";
+import {
+  caseStudySitemapPriority,
+  isCaseStudySitemapWorthy,
+  SITEMAP_STATIC_PATHS,
+} from "@/lib/seo/portfolioTiers";
 
-const BASE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://jabulani.digital";
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const base = getSiteUrl();
+  const caseStudies = await getCaseStudies();
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const routes = [
-    "",
-    "/digital-experience-diagnostic",
-    "/case-studies",
-    "/how-i-work",
-    "/about",
-    "/start-a-project",
-    "/ongoing-care",
-  ];
+  const staticEntries: MetadataRoute.Sitemap = SITEMAP_STATIC_PATHS.map(
+    ({ path, priority, changeFrequency }) => ({
+      url: `${base}${path || "/"}`,
+      lastModified: new Date(),
+      changeFrequency,
+      priority,
+    })
+  );
 
-  return routes.map((route) => ({
-    url: `${BASE_URL}${route}`,
-    lastModified: new Date(),
-    changeFrequency: route === "" ? "weekly" : "monthly",
-    priority: route === "" ? 1 : route === "/start-a-project" ? 0.9 : 0.8,
-  }));
+  const caseStudyEntries: MetadataRoute.Sitemap = caseStudies
+    .filter(isCaseStudySitemapWorthy)
+    .map((study) => ({
+      url: `${base}/case-studies/${study.slug}`,
+      lastModified: study.publishedAt ? new Date(study.publishedAt) : new Date(),
+      changeFrequency: "monthly" as const,
+      priority: caseStudySitemapPriority(study),
+    }));
+
+  return [...staticEntries, ...caseStudyEntries];
 }

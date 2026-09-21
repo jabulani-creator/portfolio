@@ -12,6 +12,7 @@ export const metadata: Metadata = buildPageMetadata({
   title: "Work",
   description:
     "Case studies, builds, and experiments — business problems investigated and digital systems shipped.",
+  path: "/case-studies",
 });
 
 function WorkGroup({

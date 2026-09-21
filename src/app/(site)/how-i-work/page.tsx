@@ -16,6 +16,7 @@ export const metadata: Metadata = buildPageMetadata({
   title: "How I Work",
   description:
     "How the digital experience diagnostic runs — and what is honestly in scope today.",
+  path: "/how-i-work",
 });
 
 export default async function HowIWorkPage() {
